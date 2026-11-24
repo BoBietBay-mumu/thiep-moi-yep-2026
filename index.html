@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Thiệp Mời Year End Party 2026</title>
+  <title>Thư Mời Year End Party - Phòng Truyền hình nước ngoài</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Great+Vibes&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet" />
@@ -381,13 +381,13 @@
       filter: drop-shadow(0 6px 16px rgba(40, 10, 15, 0.14));
     }
 
-    /* Lowered top padding (top: 72px) so the top 3 lines sit comfortably below the top lace border */
+    /* Safe content container inside the lace frame and above the red V-pocket */
     .letter-safe-content {
       position: absolute;
-      top: 72px;
+      top: 66px;
       left: 38px;
       right: 38px;
-      height: 360px;
+      height: 368px;
       z-index: 2;
       display: flex;
       flex-direction: column;
@@ -407,46 +407,27 @@
       pointer-events: none;
     }
 
+    /* 1. Script Title ("Thư Mời") */
     .letter-header-group {
       width: 100%;
-      padding-top: 2px;
     }
 
-    /* Extra top & side breathing room so script flourishes of "M" never clip */
     .letter-script-title {
       font-family: 'Great Vibes', cursive;
-      font-size: 35px;
+      font-size: 38px;
       line-height: 1.25;
       padding: 4px 6px 0 6px;
       color: var(--wine-main);
-      margin-bottom: 1px;
       white-space: nowrap;
     }
 
-    .letter-subtitle {
-      font-size: 8.5px;
-      font-weight: 700;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--gold-dark);
-      margin-bottom: 2px;
-    }
-
-    .letter-event-name {
-      font-family: 'Playfair Display', serif;
-      font-size: 18px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      color: var(--wine-dark);
-      line-height: 1.15;
-    }
-
+    /* 2. Divider Line */
     .gold-divider {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
-      width: 74%;
+      width: 72%;
       margin: 0 auto;
     }
 
@@ -463,18 +444,25 @@
       transform: rotate(45deg);
     }
 
-    .guest-salutation-box { width: 100%; }
+    /* 3. Salutation Block: TRÂN TRỌNG KÍNH MỜI -> Guest Name -> Đến dự Year End Party -> Phòng Truyền hình nước ngoài */
+    .guest-salutation-box {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
 
     .guest-salutation-label {
-      font-size: 8px;
-      letter-spacing: 0.16em;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--text-muted);
+      color: var(--gold-dark);
     }
 
     .guest-salutation-name {
       font-family: 'Playfair Display', serif;
-      font-size: 16.5px;
+      font-size: 17px;
       font-weight: 700;
       color: var(--wine-main);
       line-height: 1.2;
@@ -483,16 +471,35 @@
     .guest-custom-note {
       font-family: 'Cormorant Garamond', serif;
       font-style: italic;
-      font-size: 12.5px;
+      font-size: 12px;
       color: #4a282c;
-      margin-top: 1px;
-      line-height: 1.2;
+      line-height: 1.15;
       display: -webkit-box;
-      -webkit-line-clamp: 2;
+      -webkit-line-clamp: 1;
       -webkit-box-orient: vertical;
       overflow: hidden;
     }
 
+    .letter-event-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--wine-dark);
+      line-height: 1.2;
+      margin-top: 2px;
+    }
+
+    .letter-subtitle {
+      font-size: 8.5px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      line-height: 1.2;
+    }
+
+    /* 4. Date, Time, Venue (Preserved) */
     .event-meta-stack {
       display: flex;
       flex-direction: column;
@@ -575,13 +582,13 @@
       display: block;
     }
 
-    /* ================= 3D FLIP RSVP CARD ================= */
+    /* ================= 3D FLIP RSVP CARD (SUPPORTS 3+ OPTIONS) ================= */
     .rsvp-flip-container {
       position: absolute;
-      left: 730px;
-      top: 438px;
-      width: 295px;
-      height: 215px;
+      left: 725px;
+      top: 432px;
+      width: 305px;
+      min-height: 228px;
       perspective: 1100px;
       z-index: 8;
       opacity: 0;
@@ -599,7 +606,7 @@
     .rsvp-flip-inner {
       position: relative;
       width: 100%;
-      height: 100%;
+      min-height: 228px;
       transition: transform 0.75s cubic-bezier(0.4, 0.2, 0.2, 1);
       transform-style: preserve-3d;
     }
@@ -616,11 +623,12 @@
       background: var(--cream-paper);
       border: 1.5px solid var(--gold-main);
       border-radius: 14px;
-      padding: 16px 18px;
+      padding: 13px 16px;
       box-shadow: 0 18px 34px rgba(45, 7, 13, 0.24);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      gap: 6px;
     }
 
     .rsvp-face::before {
@@ -635,7 +643,7 @@
     .rsvp-back { transform: rotateY(180deg); }
 
     .rsvp-kicker {
-      font-size: 9.5px;
+      font-size: 9px;
       font-weight: 700;
       letter-spacing: 0.18em;
       text-transform: uppercase;
@@ -645,54 +653,62 @@
 
     .rsvp-question {
       font-family: 'Playfair Display', serif;
-      font-size: 15.5px;
+      font-size: 14.5px;
       font-weight: 700;
       color: var(--wine-dark);
       text-align: center;
-      line-height: 1.3;
-      margin: 4px 0 8px 0;
+      line-height: 1.25;
     }
 
     .rsvp-choice-group {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 6px;
     }
 
-    .btn-rsvp-yes {
+    .btn-rsvp-option {
       width: 100%;
-      padding: 9px 12px;
+      padding: 7px 11px;
       border-radius: 999px;
-      border: 1px solid #e7c572;
-      background: linear-gradient(135deg, var(--wine-main) 0%, var(--wine-dark) 100%);
-      color: #fff6e0;
-      font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
-    }
-
-    .btn-rsvp-no {
-      width: 100%;
-      padding: 8px 12px;
-      border-radius: 999px;
-      border: 1px solid var(--gold-main);
-      background: #fffdf8;
-      color: var(--wine-main);
       font-size: 11.5px;
       font-weight: 600;
       cursor: pointer;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+    }
+
+    .btn-rsvp-primary {
+      border: 1px solid #e7c572;
+      background: linear-gradient(135deg, var(--wine-main) 0%, var(--wine-dark) 100%);
+      color: #fff6e0;
+    }
+
+    .btn-rsvp-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(106, 13, 27, 0.3);
+    }
+
+    .btn-rsvp-secondary {
+      border: 1px solid var(--gold-main);
+      background: #fffdf8;
+      color: var(--wine-main);
+    }
+
+    .btn-rsvp-secondary:hover {
+      background: #f5ead6;
     }
 
     .rsvp-status-pill {
       text-align: center;
       font-size: 10.5px;
       color: var(--text-muted);
+      line-height: 1.25;
     }
 
     .rsvp-back-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 6px;
     }
 
     .rsvp-selected-tag {
@@ -712,11 +728,12 @@
       font-weight: 600;
       cursor: pointer;
       text-decoration: underline;
+      white-space: nowrap;
     }
 
     .rsvp-textarea {
       width: 100%;
-      height: 78px;
+      height: 86px;
       resize: none;
       border-radius: 8px;
       border: 1px solid rgba(201, 158, 72, 0.65);
@@ -727,6 +744,8 @@
       color: var(--text-dark);
       outline: none;
     }
+
+    .rsvp-textarea:focus { border-color: var(--wine-main); }
 
     .btn-submit-rsvp {
       width: 100%;
@@ -999,6 +1018,11 @@
     }
     .toast-notif.show { opacity: 1; transform: translateY(0); }
 
+    img:not([src]), img[src=""] {
+      opacity: 0 !important;
+      visibility: hidden !important;
+    }
+
     @media (max-width: 820px) {
       body { overflow-y: auto; }
       #invitation-view { position: relative; inset: auto; min-height: calc(100vh - 58px); padding: 20px 10px; overflow-y: auto; }
@@ -1010,24 +1034,20 @@
       .env-back-layer { left: -7px; width: 354px; height: 310px; }
       .env-front-pocket { width: 340px; }
       .lace-letter-sheet { left: 17px; bottom: 18px; width: 306px; height: 425px; }
-      .letter-safe-content { top: 50px; left: 24px; right: 24px; height: 260px; }
-      .letter-script-title { font-size: 24px; }
-      .letter-event-name { font-size: 13.5px; }
-      .guest-salutation-name { font-size: 13px; }
+      .letter-safe-content { top: 48px; left: 24px; right: 24px; height: 265px; }
+      .letter-script-title { font-size: 26px; }
+      .letter-event-name { font-size: 12.5px; }
+      .guest-salutation-name { font-size: 13.5px; }
       .meta-row-value { font-size: 11.5px; }
       .photo-extract-card, .rsvp-flip-container { position: relative; left: auto; top: auto; transform: none !important; opacity: 1 !important; }
       #btn-reclose { position: relative; left: auto; bottom: auto; margin-top: 10px; }
       .admin-grid-3, .stats-strip { grid-template-columns: 1fr; }
     }
-    img:not([src]), img[src=""] {
-      opacity: 0 !important;
-      visibility: hidden !important;
-    }
   </style>
 </head>
 <body>
 
-  <!-- LUXURY SPINNER OVERLAY (PREVENTS BROKEN IMAGE FLASH) -->
+  <!-- LUXURY SPINNER OVERLAY -->
   <div id="page-loader">
     <div class="gold-spinner"></div>
     <div class="loader-caption">Đang chuẩn bị thiệp mời...</div>
@@ -1039,7 +1059,7 @@
       <div class="nav-seal">Y</div>
       <div class="nav-title-group">
         <h1>YEAR END PARTY 2026</h1>
-        <p>Hệ thống Thiệp Mời Cá Nhân Hóa & Quản Lý Khách Mời</p>
+        <p>Phòng Truyền hình nước ngoài — Quản Lý Thiệp Mời</p>
       </div>
     </div>
 
@@ -1067,7 +1087,7 @@
           <img id="img-closed-env" class="closed-envelope-img" alt="" />
           <div class="wax-pulse-ring"></div>
         </div>
-        <div class="open-hint-pill" id="card-open-hint">✦ Chạm vào dấu sáp để mở thiệp mời ✦</div>
+        <div class="open-hint-pill" id="card-open-hint">✦ Chạm vào dấu sáp để mở thư mời ✦</div>
       </div>
 
       <!-- 2. OPENED SCENE -->
@@ -1080,36 +1100,40 @@
             <img id="img-lace-border" class="lace-bg-img" alt="" />
 
             <div class="letter-safe-content">
+              <!-- 1. Tiêu đề -->
               <div class="letter-header-group">
-                <div class="letter-script-title" id="card-script-title">Trân Trọng Kính Mời</div>
-                <div class="letter-subtitle" id="card-subtitle">THAM DỰ ĐÊM TIỆC TỔNG KẾT</div>
-                <div class="letter-event-name" id="card-event-title">YEAR END PARTY 2026</div>
+                <div class="letter-script-title" id="card-script-title">Thư Mời</div>
               </div>
 
+              <!-- 2. Gạch ngăn cách -->
               <div class="gold-divider">
                 <span class="line"></span>
                 <span class="diamond"></span>
                 <span class="line"></span>
               </div>
 
+              <!-- 3. TRÂN TRỌNG KÍNH MỜI -> Tên khách -> Đến dự Year End Party -> Phòng Truyền hình nước ngoài -->
               <div class="guest-salutation-box">
-                <div class="guest-salutation-label" id="card-salutation-prefix">Kính gửi Quý khách</div>
+                <div class="guest-salutation-label" id="card-salutation-prefix">TRÂN TRỌNG KÍNH MỜI</div>
                 <div class="guest-salutation-name" id="card-guest-name">Ông Nguyễn Minh Khôi</div>
-                <div class="guest-custom-note" id="card-guest-note">Trân trọng kính mời anh cùng chung vui khoảnh khắc tổng kết cuối năm!</div>
+                <div class="guest-custom-note" id="card-guest-note">Trân trọng kính mời cùng chung vui khoảnh khắc tổng kết cuối năm!</div>
+                <div class="letter-event-name" id="card-event-title">Đến dự Year End Party</div>
+                <div class="letter-subtitle" id="card-subtitle">Phòng Truyền hình nước ngoài</div>
               </div>
 
+              <!-- 4. Ngày tháng, thời gian, địa điểm giữ nguyên -->
               <div class="event-meta-stack">
                 <div>
                   <div class="meta-row-label" id="card-label-date">📅 NGÀY TỔ CHỨC</div>
-                  <div class="meta-row-value" id="card-event-date">Thứ Sáu, 18 Tháng 12 Năm 2026</div>
+                  <div class="meta-row-value" id="card-event-date">Thứ Năm, 17 Tháng 12 Năm 2026</div>
                 </div>
                 <div>
                   <div class="meta-row-label" id="card-label-time">🕒 THỜI GIAN</div>
-                  <div class="meta-row-value" id="card-event-time">18:00 – 22:00</div>
+                  <div class="meta-row-value" id="card-event-time">17:30 – 22:30</div>
                 </div>
                 <div>
                   <div class="meta-row-label" id="card-label-venue">📍 ĐỊA ĐIỂM</div>
-                  <div class="meta-row-value" id="card-event-venue">Riverside Event Hall</div>
+                  <div class="meta-row-value" id="card-event-venue">Montem Villa | Hòa Bình</div>
                   <div class="meta-row-sub" id="card-event-address">Số 9 Đại lộ Ven Sông, Hà Nội</div>
                 </div>
               </div>
@@ -1136,22 +1160,19 @@
           </div>
         </div>
 
-        <!-- Bottom Right Offset: 3D Flip RSVP Card -->
+        <!-- Bottom Right Offset: 3D Flip RSVP Card (3+ options supported dynamically) -->
         <div id="rsvp-card-container" class="rsvp-flip-container">
           <div class="rsvp-flip-inner">
             <div class="rsvp-face rsvp-front">
               <div class="rsvp-kicker" id="card-rsvp-kicker">PHẢN HỒI THAM DỰ</div>
               <div class="rsvp-question" id="card-rsvp-question">Quý khách xác nhận tham gia cùng chúng tôi chứ?</div>
-              <div class="rsvp-choice-group">
-                <button class="btn-rsvp-yes" id="card-rsvp-yes-btn" onclick="chooseRsvp('yes')">✦ Sẽ tham dự đêm tiệc</button>
-                <button class="btn-rsvp-no" id="card-rsvp-no-btn" onclick="chooseRsvp('no')">Rất tiếc, không thể tham dự</button>
-              </div>
+              <div class="rsvp-choice-group" id="card-rsvp-choices"></div>
               <div class="rsvp-status-pill" id="rsvp-front-status">Chưa gửi phản hồi</div>
             </div>
 
             <div class="rsvp-face rsvp-back">
               <div class="rsvp-back-header">
-                <span class="rsvp-selected-tag" id="rsvp-back-choice-label">✓ Sẽ tham dự</span>
+                <span class="rsvp-selected-tag" id="rsvp-back-choice-label">✓ Lựa chọn</span>
                 <button class="btn-flip-back" onclick="flipRsvpBack()">← Đổi lựa chọn</button>
               </div>
               <textarea id="rsvp-message-input" class="rsvp-textarea" placeholder="Quý khách có lời nhắn gửi gì tới Ban Tổ Chức không? (Không bắt buộc)..."></textarea>
@@ -1176,11 +1197,11 @@
           <div class="stat-num" id="stat-total">0</div>
         </div>
         <div class="stat-box">
-          <div class="stat-label" style="color:#166534;">✓ Đồng ý tham dự</div>
+          <div class="stat-label" style="color:#166534;">✓ Đã xác nhận tham dự</div>
           <div class="stat-num" id="stat-yes" style="color:#166534;">0</div>
         </div>
         <div class="stat-box">
-          <div class="stat-label" style="color:#991b1b;">✕ Không thể tham dự</div>
+          <div class="stat-label" style="color:#991b1b;">✕ Không tham dự</div>
           <div class="stat-num" id="stat-no" style="color:#991b1b;">0</div>
         </div>
         <div class="stat-box">
@@ -1189,13 +1210,13 @@
         </div>
       </div>
 
-      <!-- 1. Full Text & Event Editor -->
+      <!-- 1. Full Text & Multi-Option RSVP Editor -->
       <div class="admin-card">
         <div class="admin-card-header">
           <div>
-            <h2>1. Chỉnh Sửa Toàn Bộ Nội Dung & Diễn Đạt Trên Thiệp (Lưu Vĩnh Viễn Lên Cloud)</h2>
+            <h2>1. Chỉnh Sửa Nội Dung, Thứ Tự & Các Lựa Chọn Phản Hồi (3+ Lựa Chọn)</h2>
             <p style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">
-              Mọi dòng chữ từ tiêu đề thư pháp, lời mở đầu, nhãn ngày/giờ/địa điểm cho tới câu hỏi thẻ xác nhận đều chỉnh sửa được tại đây.
+              Mỗi lựa chọn ở ô cuối cùng cách nhau bởi dấu <strong>|</strong> (bạn có thể đặt 3, 4 hoặc 5 lựa chọn tùy ý).
             </p>
           </div>
           <button class="btn-primary-wine" onclick="saveEventSettings()">💾 Lưu Tất Cả Thay Đổi</button>
@@ -1207,17 +1228,17 @@
             <input id="input-script-title" class="form-control" type="text" />
           </div>
           <div class="form-group">
-            <label>Dòng tiêu đề phụ (chữ in nhỏ)</label>
-            <input id="input-event-subtitle" class="form-control" type="text" />
+            <label>Dòng lời mời (mặc định: TRÂN TRỌNG KÍNH MỜI)</label>
+            <input id="input-salutation-prefix" class="form-control" type="text" />
           </div>
           <div class="form-group">
-            <label>Tên chương trình chính</label>
+            <label>Dòng sự kiện (mặc định: Đến dự Year End Party)</label>
             <input id="input-event-title" class="form-control" type="text" />
           </div>
 
           <div class="form-group">
-            <label>Dòng dẫn trước tên khách</label>
-            <input id="input-salutation-prefix" class="form-control" type="text" />
+            <label>Dòng chữ nhỏ phía dưới (Phòng Truyền hình nước ngoài)</label>
+            <input id="input-event-subtitle" class="form-control" type="text" />
           </div>
           <div class="form-group">
             <label>Dòng gợi ý dưới phong bì đóng</label>
@@ -1263,8 +1284,8 @@
             <input id="input-rsvp-question" class="form-control" type="text" />
           </div>
           <div class="form-group">
-            <label>Nút đồng ý / Nút từ chối (cách nhau dấu |)</label>
-            <input id="input-rsvp-buttons" class="form-control" type="text" />
+            <label>Danh sách lựa chọn RSVP (từ 3 lựa chọn trở lên, ngăn cách bằng |)</label>
+            <input id="input-rsvp-options" class="form-control" type="text" />
           </div>
         </div>
       </div>
@@ -1317,7 +1338,7 @@
       </div>
       <div class="form-group">
         <label>Nội dung lời mời riêng cho vị khách này</label>
-        <input id="modal-guest-note" class="form-control" type="text" placeholder="Ví dụ: Trân trọng kính mời anh cùng chung vui..." />
+        <input id="modal-guest-note" class="form-control" type="text" placeholder="Ví dụ: Trân trọng kính mời cùng chung vui..." />
       </div>
       <div class="form-group">
         <label>Ảnh cá nhân hóa (Khung đứng 9:16 giống ảnh mẫu)</label>
@@ -1342,7 +1363,7 @@
         <button class="btn-sm" onclick="closeShareModal()">✕</button>
       </div>
       <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.5;">
-        Gửi đường dẫn bên dưới cho <strong id="share-guest-name" style="color: var(--wine-dark);"></strong>. Khi mở link này trên Vercel, giao diện quản lý sẽ ẩn hoàn toàn, khách chỉ xem được thiệp cá nhân của mình và xác nhận tham dự.
+        Gửi đường dẫn bên dưới cho <strong id="share-guest-name" style="color: var(--wine-dark);"></strong>. Khi mở link này, giao diện quản lý sẽ ẩn hoàn toàn, khách chỉ xem được thiệp cá nhân của mình và xác nhận tham dự.
       </p>
       <div style="display: flex; gap: 8px;">
         <input id="share-link-input" class="form-control" type="text" readonly style="flex:1; background:#f8f2e6;" />
@@ -1364,43 +1385,49 @@
     const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     /* ================= STORAGE & DEFAULT STATE ================= */
-    const LOCAL_STORAGE_KEY = 'yep2026_cloud_backup_v4';
+    const LOCAL_STORAGE_KEY = 'yep2026_cloud_backup_v5';
+    const ASSET_CACHE_DB = 'yep2026_asset_cache_v2';
+
+    const DEFAULT_RSVP_OPTIONS = [
+      '✦ Sẽ tham dự đêm tiệc',
+      '✦ Sẽ tham dự & ở lại qua đêm',
+      'Rất tiếc, không thể tham dự'
+    ];
 
     const DEFAULT_STATE = {
       event: {
-        scriptTitle: 'Trân Trọng Kính Mời',
-        subtitle: 'THAM DỰ ĐÊM TIỆC TỔNG KẾT',
-        title: 'YEAR END PARTY 2026',
-        salutationPrefix: 'Kính gửi Quý khách',
-        openHint: '✦ Chạm vào dấu sáp để mở thiệp mời ✦',
+        scriptTitle: 'Thư Mời',
+        salutationPrefix: 'TRÂN TRỌNG KÍNH MỜI',
+        title: 'Đến dự Year End Party',
+        subtitle: 'Phòng Truyền hình nước ngoài',
+        openHint: '✦ Chạm vào dấu sáp để mở thư mời ✦',
         labelDate: '📅 NGÀY TỔ CHỨC',
-        date: 'Thứ Sáu, 18 Tháng 12 Năm 2026',
+        date: 'Thứ Năm, 17 Tháng 12 Năm 2026',
         labelTime: '🕒 THỜI GIAN',
-        time: '18:00 – 22:00',
+        time: '17:30 – 22:30',
         labelVenue: '📍 ĐỊA ĐIỂM',
-        venue: 'Riverside Event Hall',
+        venue: 'Montem Villa | Hòa Bình',
         address: 'Số 9 Đại lộ Ven Sông, Hà Nội',
         quote: 'Cùng nâng ly chào đón một năm rực rỡ thành công!',
         rsvpQuestion: 'Quý khách xác nhận tham gia cùng chúng tôi chứ?',
-        rsvpYesLabel: '✦ Sẽ tham dự đêm tiệc',
-        rsvpNoLabel: 'Rất tiếc, không thể tham dự'
+        rsvpOptions: DEFAULT_RSVP_OPTIONS
       },
       guests: [
         {
           id: 'khach-01',
           name: 'Ông Nguyễn Minh Khôi',
-          note: 'Trân trọng kính mời anh cùng chung vui khoảnh khắc tổng kết cuối năm!',
+          note: 'Trân trọng kính mời cùng chung vui khoảnh khắc tổng kết cuối năm!',
           photo: '',
-          rsvp: 'pending',
+          rsvp: '',
           rsvpAt: '',
           message: ''
         },
         {
           id: 'khach-02',
           name: 'Bà Trần Thanh Thảo',
-          note: 'Sự hiện diện của chị là niềm vinh hạnh lớn của Ban Tổ Chức!',
+          note: 'Sự hiện diện là niềm vinh hạnh lớn của Ban Tổ Chức!',
           photo: '',
-          rsvp: 'yes',
+          rsvp: '✦ Sẽ tham dự đêm tiệc',
           rsvpAt: '18:20 - 24/11/2026',
           message: 'Chị sẽ có mặt đúng giờ, hẹn gặp mọi người!'
         }
@@ -1416,8 +1443,20 @@
       defaultPortrait: ''
     };
     let currentGuestId = appState.guests[0]?.id || 'khach-01';
-    let pendingRsvpChoice = 'yes';
+    let pendingRsvpChoice = DEFAULT_RSVP_OPTIONS[0];
     let modalTempPhoto = '';
+
+    function isDeclineOption(label) {
+      const lower = String(label || '').toLowerCase();
+      return lower.includes('không thể') || lower.includes('không tham dự') || lower.includes('từ chối') || lower.includes('tiếc');
+    }
+
+    function getRsvpOptions() {
+      const opts = Array.isArray(appState.event?.rsvpOptions) && appState.event.rsvpOptions.length >= 2
+        ? appState.event.rsvpOptions
+        : DEFAULT_RSVP_OPTIONS;
+      return opts.map(s => String(s).trim()).filter(Boolean);
+    }
 
     function formatVietnamDateTime(dateObj = new Date()) {
       const pad = (n) => String(n).padStart(2, '0');
@@ -1429,8 +1468,12 @@
         const raw = localStorage.getItem(LOCAL_STORAGE_KEY);
         if (raw) {
           const parsed = JSON.parse(raw);
+          const mergedEvent = { ...DEFAULT_STATE.event, ...(parsed.event || {}) };
+          if (!Array.isArray(mergedEvent.rsvpOptions) || mergedEvent.rsvpOptions.length < 2) {
+            mergedEvent.rsvpOptions = DEFAULT_RSVP_OPTIONS;
+          }
           return {
-            event: { ...DEFAULT_STATE.event, ...(parsed.event || {}) },
+            event: mergedEvent,
             guests: Array.isArray(parsed.guests) && parsed.guests.length ? parsed.guests : DEFAULT_STATE.guests
           };
         }
@@ -1466,15 +1509,19 @@
           if (notifyDiff) {
             newGuests.forEach(ng => {
               const og = oldGuestsMap.get(ng.id);
-              if (og && (og.rsvp !== ng.rsvp || og.rsvpAt !== ng.rsvpAt) && ng.rsvp !== 'pending') {
-                const actionText = ng.rsvp === 'yes' ? 'ĐỒNG Ý THAM DỰ' : 'TỪ CHỐI THAM DỰ';
-                showToast(`🔔 ${ng.name} vừa xác nhận ${actionText} lúc ${ng.rsvpAt || 'vừa xong'}!`);
+              if (og && (og.rsvp !== ng.rsvp || og.rsvpAt !== ng.rsvpAt) && ng.rsvp) {
+                showToast(`🔔 ${ng.name} vừa chọn "${ng.rsvp}" lúc ${ng.rsvpAt || 'vừa xong'}!`);
               }
             });
           }
 
+          const mergedEvent = { ...DEFAULT_STATE.event, ...(data.payload.event || {}) };
+          if (!Array.isArray(mergedEvent.rsvpOptions) || mergedEvent.rsvpOptions.length < 2) {
+            mergedEvent.rsvpOptions = DEFAULT_RSVP_OPTIONS;
+          }
+
           appState = {
-            event: { ...DEFAULT_STATE.event, ...(data.payload.event || {}) },
+            event: mergedEvent,
             guests: newGuests
           };
           localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(appState));
@@ -1519,9 +1566,7 @@
       }
     }
 
-    /* ================= ULTRA-FAST CACHED ASSETS & INSTANT BOOT ================= */
-    const ASSET_CACHE_DB = 'yep2026_asset_cache_v2';
-
+    /* ================= INDEXEDDB CACHE & RETINA TRANSPARENCY ================= */
     function openAssetDB() {
       return new Promise((resolve) => {
         if (!window.indexedDB) return resolve(null);
@@ -1550,7 +1595,7 @@
       tx.objectStore('assets').put(val, key);
     }
 
-    function compressImageFile(file, maxWidth = 650) {
+    function compressImageFile(file, maxWidth = 800) {
       return new Promise((resolve) => {
         const reader = new FileReader();
         reader.onload = (e) => {
@@ -1562,7 +1607,7 @@
             canvas.height = Math.round(img.height * scale);
             const ctx = canvas.getContext('2d');
             ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-            resolve(canvas.toDataURL('image/webp', 0.82));
+            resolve(canvas.toDataURL('image/jpeg', 0.88));
           };
           img.src = e.target.result;
         };
@@ -1660,24 +1705,15 @@
       return '';
     }
 
-    async function resolvePrimaryEnvelope() {
+    async function resolveAllAssets() {
       const nfc = (s) => encodeURI(s.normalize('NFC'));
       const nfd = (s) => encodeURI(s.normalize('NFD'));
 
-      const closed = await loadAndCacheAsset('closedEnv', [
-        nfc('./Ảnh ChatGPT 16_16_04 24 thg 11, 2026.png'),
-        nfd('./Ảnh ChatGPT 16_16_04 24 thg 11, 2026.png')
-      ], 'remove-outer-white');
-
-      processedAssets.closedEnv = closed;
-      if (closed) document.getElementById('img-closed-env').src = closed;
-    }
-
-    async function resolveInnerAssetsInBackground() {
-      const nfc = (s) => encodeURI(s.normalize('NFC'));
-      const nfd = (s) => encodeURI(s.normalize('NFD'));
-
-      const [openBack, openFront, lace, portrait] = await Promise.all([
+      const [closed, openBack, openFront, lace, portrait] = await Promise.all([
+        loadAndCacheAsset('closedEnv', [
+          nfc('./Ảnh ChatGPT 16_16_04 24 thg 11, 2026.png'),
+          nfd('./Ảnh ChatGPT 16_16_04 24 thg 11, 2026.png')
+        ], 'remove-outer-white'),
         loadAndCacheAsset('openEnvBack', [
           nfc('./Phong bì nhung đỏ mở nắp_2.webp'),
           nfd('./Phong bì nhung đỏ mở nắp_2.webp'),
@@ -1700,17 +1736,16 @@
         ], 'none')
       ]);
 
+      processedAssets.closedEnv = closed;
       processedAssets.openEnvBack = openBack;
       processedAssets.openEnvFront = openFront;
       processedAssets.laceFrame = lace;
       processedAssets.defaultPortrait = portrait;
 
+      if (closed) document.getElementById('img-closed-env').src = closed;
       if (openBack) document.getElementById('img-open-env-back').src = openBack;
       if (openFront) document.getElementById('img-open-env-front').src = openFront;
       if (lace) document.getElementById('img-lace-border').src = lace;
-
-      renderCurrentInvitation();
-      renderAdminTable();
     }
 
     /* ================= AUTO-FIT STAGE TO VIEWPORT ================= */
@@ -1744,7 +1779,19 @@
       document.getElementById('rsvp-card-container').classList.remove('is-flipped');
     }
 
-    /* ================= RENDER INVITATION FOR CURRENT GUEST ================= */
+    /* ================= RENDER INVITATION & MULTI-OPTION RSVP ================= */
+    function renderRsvpButtons() {
+      const container = document.getElementById('card-rsvp-choices');
+      const options = getRsvpOptions();
+
+      container.innerHTML = options.map((opt, idx) => {
+        const isDecline = isDeclineOption(opt);
+        const btnClass = isDecline ? 'btn-rsvp-option btn-rsvp-secondary' : 'btn-rsvp-option btn-rsvp-primary';
+        const encoded = encodeURIComponent(opt);
+        return `<button class="${btnClass}" onclick="chooseRsvp(decodeURIComponent('${encoded}'))">${opt}</button>`;
+      }).join('');
+    }
+
     function renderCurrentInvitation() {
       const guest = appState.guests.find(g => g.id === currentGuestId) || appState.guests[0];
       if (!guest) return;
@@ -1753,9 +1800,11 @@
       const ev = appState.event;
       document.getElementById('card-open-hint').textContent = ev.openHint;
       document.getElementById('card-script-title').textContent = ev.scriptTitle;
-      document.getElementById('card-subtitle').textContent = ev.subtitle;
-      document.getElementById('card-event-title').textContent = ev.title;
       document.getElementById('card-salutation-prefix').textContent = ev.salutationPrefix;
+      document.getElementById('card-guest-name').textContent = guest.name;
+      document.getElementById('card-guest-note').textContent = guest.note || '';
+      document.getElementById('card-event-title').textContent = ev.title;
+      document.getElementById('card-subtitle').textContent = ev.subtitle;
 
       document.getElementById('card-label-date').textContent = ev.labelDate;
       document.getElementById('card-event-date').textContent = ev.date;
@@ -1767,25 +1816,20 @@
       document.getElementById('card-closing-quote').textContent = ev.quote;
 
       document.getElementById('card-rsvp-question').textContent = ev.rsvpQuestion;
-      document.getElementById('card-rsvp-yes-btn').textContent = ev.rsvpYesLabel;
-      document.getElementById('card-rsvp-no-btn').textContent = ev.rsvpNoLabel;
+      renderRsvpButtons();
 
-      document.getElementById('card-guest-name').textContent = guest.name;
-      document.getElementById('card-guest-note').textContent = guest.note || '';
       if (guest.photo || processedAssets.defaultPortrait) {
         document.getElementById('card-guest-photo').src = guest.photo || processedAssets.defaultPortrait;
       }
 
       const statusEl = document.getElementById('rsvp-front-status');
       const timeSuffix = guest.rsvpAt ? ` (${guest.rsvpAt})` : '';
-      if (guest.rsvp === 'yes') {
-        statusEl.textContent = `✓ Đã xác nhận: Sẽ tham dự${timeSuffix}`;
-        statusEl.style.color = '#166534';
-      } else if (guest.rsvp === 'no') {
-        statusEl.textContent = `✕ Đã phản hồi: Không thể tham dự${timeSuffix}`;
-        statusEl.style.color = '#991b1b';
+      if (guest.rsvp) {
+        const decline = isDeclineOption(guest.rsvp);
+        statusEl.textContent = `${decline ? '✕' : '✓'} Đã chọn: ${guest.rsvp}${timeSuffix}`;
+        statusEl.style.color = decline ? '#991b1b' : '#166534';
       } else {
-        statusEl.textContent = 'Vui lòng chọn xác nhận tham dự';
+        statusEl.textContent = 'Vui lòng chọn phản hồi tham dự';
         statusEl.style.color = 'var(--text-muted)';
       }
 
@@ -1793,18 +1837,13 @@
       document.getElementById('rsvp-card-container').classList.remove('is-flipped');
     }
 
-    function chooseRsvp(choice) {
-      pendingRsvpChoice = choice;
-      const label = document.getElementById('rsvp-back-choice-label');
-      if (choice === 'yes') {
-        label.textContent = '✓ Xác nhận: Sẽ tham dự';
-        label.style.background = '#e1f5e8';
-        label.style.color = '#166534';
-      } else {
-        label.textContent = '✕ Phản hồi: Không tham dự';
-        label.style.background = '#fee2e2';
-        label.style.color = '#991b1b';
-      }
+    function chooseRsvp(choiceLabel) {
+      pendingRsvpChoice = choiceLabel;
+      const badge = document.getElementById('rsvp-back-choice-label');
+      const decline = isDeclineOption(choiceLabel);
+      badge.textContent = `${decline ? '✕' : '✓'} ${choiceLabel}`;
+      badge.style.background = decline ? '#fee2e2' : '#e1f5e8';
+      badge.style.color = decline ? '#991b1b' : '#166534';
       document.getElementById('rsvp-card-container').classList.add('is-flipped');
     }
 
@@ -1829,7 +1868,7 @@
       await saveAppState(true);
       renderCurrentInvitation();
       renderAdminTable();
-      showToast(`Cảm ơn ${guest.name}! Đã gửi xác nhận lúc ${timestamp} tới Ban Tổ Chức.`);
+      showToast(`Cảm ơn ${guest.name}! Đã ghi nhận "${pendingRsvpChoice}" lúc ${timestamp}.`);
     }
 
     /* ================= ADMIN TABS & CONTROLS ================= */
@@ -1860,9 +1899,9 @@
     function populateEventInputs() {
       const ev = appState.event;
       document.getElementById('input-script-title').value = ev.scriptTitle;
-      document.getElementById('input-event-subtitle').value = ev.subtitle;
-      document.getElementById('input-event-title').value = ev.title;
       document.getElementById('input-salutation-prefix').value = ev.salutationPrefix;
+      document.getElementById('input-event-title').value = ev.title;
+      document.getElementById('input-event-subtitle').value = ev.subtitle;
       document.getElementById('input-open-hint').value = ev.openHint;
       document.getElementById('input-event-quote').value = ev.quote;
       document.getElementById('input-label-date').value = ev.labelDate;
@@ -1873,15 +1912,15 @@
       document.getElementById('input-event-venue').value = ev.venue;
       document.getElementById('input-event-address').value = ev.address;
       document.getElementById('input-rsvp-question').value = ev.rsvpQuestion;
-      document.getElementById('input-rsvp-buttons').value = `${ev.rsvpYesLabel} | ${ev.rsvpNoLabel}`;
+      document.getElementById('input-rsvp-options').value = getRsvpOptions().join(' | ');
     }
 
     async function saveEventSettings() {
       const ev = appState.event;
       ev.scriptTitle = document.getElementById('input-script-title').value.trim();
-      ev.subtitle = document.getElementById('input-event-subtitle').value.trim();
-      ev.title = document.getElementById('input-event-title').value.trim();
       ev.salutationPrefix = document.getElementById('input-salutation-prefix').value.trim();
+      ev.title = document.getElementById('input-event-title').value.trim();
+      ev.subtitle = document.getElementById('input-event-subtitle').value.trim();
       ev.openHint = document.getElementById('input-open-hint').value.trim();
       ev.quote = document.getElementById('input-event-quote').value.trim();
       ev.labelDate = document.getElementById('input-label-date').value.trim();
@@ -1893,13 +1932,19 @@
       ev.address = document.getElementById('input-event-address').value.trim();
       ev.rsvpQuestion = document.getElementById('input-rsvp-question').value.trim();
 
-      const btnParts = document.getElementById('input-rsvp-buttons').value.split('|');
-      if (btnParts[0]) ev.rsvpYesLabel = btnParts[0].trim();
-      if (btnParts[1]) ev.rsvpNoLabel = btnParts[1].trim();
+      const parsedOptions = document
+        .getElementById('input-rsvp-options')
+        .value.split('|')
+        .map(s => s.trim())
+        .filter(Boolean);
+
+      if (parsedOptions.length >= 2) {
+        ev.rsvpOptions = parsedOptions;
+      }
 
       await saveAppState();
       renderCurrentInvitation();
-      showToast('Đã lưu & đồng bộ toàn bộ nội dung thiệp lên Cloud!');
+      showToast('Đã lưu & đồng bộ nội dung thiệp và các lựa chọn RSVP lên Cloud!');
     }
 
     function syncGuestDropdown() {
@@ -1920,21 +1965,23 @@
       syncGuestDropdown();
 
       const total = appState.guests.length;
-      const yesCount = appState.guests.filter(g => g.rsvp === 'yes').length;
-      const noCount = appState.guests.filter(g => g.rsvp === 'no').length;
-      const pendingCount = total - yesCount - noCount;
+      const attendedCount = appState.guests.filter(g => g.rsvp && !isDeclineOption(g.rsvp)).length;
+      const declinedCount = appState.guests.filter(g => g.rsvp && isDeclineOption(g.rsvp)).length;
+      const pendingCount = total - attendedCount - declinedCount;
 
       document.getElementById('stat-total').textContent = total;
-      document.getElementById('stat-yes').textContent = yesCount;
-      document.getElementById('stat-no').textContent = noCount;
+      document.getElementById('stat-yes').textContent = attendedCount;
+      document.getElementById('stat-no').textContent = declinedCount;
       document.getElementById('stat-pending').textContent = pendingCount;
 
       const tbody = document.getElementById('guest-table-body');
       tbody.innerHTML = appState.guests.map(guest => {
         const photoSrc = guest.photo || processedAssets.defaultPortrait;
-        let statusHtml = `<span class="status-pill status-pending">⏳ Chưa xác nhận</span>`;
-        if (guest.rsvp === 'yes') statusHtml = `<span class="status-pill status-yes">✓ Sẽ tham dự</span>`;
-        if (guest.rsvp === 'no') statusHtml = `<span class="status-pill status-no">✕ Không tham dự</span>`;
+        let statusHtml = `<span class="status-pill status-pending">⏳ Chưa phản hồi</span>`;
+        if (guest.rsvp) {
+          const decline = isDeclineOption(guest.rsvp);
+          statusHtml = `<span class="status-pill ${decline ? 'status-no' : 'status-yes'}">${decline ? '✕' : '✓'} ${guest.rsvp}</span>`;
+        }
 
         const timeHtml = guest.rsvpAt
           ? `<span class="rsvp-time-text">🕒 Lúc ${guest.rsvpAt}</span>`
@@ -1980,7 +2027,7 @@
       document.getElementById('modal-guest-photo-file').value = '';
       if (id) {
         const guest = appState.guests.find(g => g.id === id);
-        document.getElementById('guest-modal-title').textContent = 'Chỉnh Sửa Thiệp Khách Mời';
+        document.getElementById('guest-modal-title').textContent = 'Chỉnh Sửa Thư Khách Mời';
         document.getElementById('edit-guest-id').value = guest.id;
         document.getElementById('modal-guest-name').value = guest.name;
         document.getElementById('modal-guest-note').value = guest.note || '';
@@ -1990,7 +2037,7 @@
         document.getElementById('guest-modal-title').textContent = 'Thêm Khách Mời Mới';
         document.getElementById('edit-guest-id').value = '';
         document.getElementById('modal-guest-name').value = '';
-        document.getElementById('modal-guest-note').value = 'Trân trọng kính mời Quý khách tới chung vui cùng chúng tôi!';
+        document.getElementById('modal-guest-note').value = 'Trân trọng kính mời cùng chung vui khoảnh khắc tổng kết cuối năm!';
         modalTempPhoto = '';
         document.getElementById('modal-photo-preview').src = processedAssets.defaultPortrait;
       }
@@ -2004,7 +2051,7 @@
     async function previewModalPhoto(event) {
       const file = event.target.files[0];
       if (!file) return;
-      modalTempPhoto = await compressImageFile(file, 650);
+      modalTempPhoto = await compressImageFile(file, 800);
       document.getElementById('modal-photo-preview').src = modalTempPhoto;
     }
 
@@ -2033,7 +2080,7 @@
           name,
           note,
           photo: modalTempPhoto,
-          rsvp: 'pending',
+          rsvp: '',
           rsvpAt: '',
           message: ''
         });
@@ -2081,7 +2128,7 @@
       input.setSelectionRange(0, 99999);
       navigator.clipboard?.writeText(input.value);
       document.execCommand('copy');
-      showToast('Đã sao chép đường dẫn thiệp mời riêng!');
+      showToast('Đã sao chép đường dẫn thư mời riêng!');
     }
 
     function showToast(msg) {
@@ -2092,7 +2139,7 @@
       window.__toastTimer = setTimeout(() => toast.classList.remove('show'), 3800);
     }
 
-    /* ================= REALTIME SUBSCRIPTION & COMPLETE ASSET BOOT ================= */
+    /* ================= REALTIME SUBSCRIPTION & COMPLETE BOOT ================= */
     function setupSupabaseRealtime(isGuestMode) {
       supabaseClient
         .channel('invitation-live-sync')
@@ -2108,15 +2155,19 @@
               if (!isGuestMode) {
                 newGuests.forEach(ng => {
                   const og = oldGuestsMap.get(ng.id);
-                  if (og && (og.rsvp !== ng.rsvp || og.rsvpAt !== ng.rsvpAt) && ng.rsvp !== 'pending') {
-                    const actionText = ng.rsvp === 'yes' ? 'ĐỒNG Ý THAM DỰ' : 'TỪ CHỐI THAM DỰ';
-                    showToast(`🔔 ${ng.name} vừa xác nhận ${actionText} lúc ${ng.rsvpAt || 'vừa xong'}!`);
+                  if (og && (og.rsvp !== ng.rsvp || og.rsvpAt !== ng.rsvpAt) && ng.rsvp) {
+                    showToast(`🔔 ${ng.name} vừa chọn "${ng.rsvp}" lúc ${ng.rsvpAt || 'vừa xong'}!`);
                   }
                 });
               }
 
+              const mergedEvent = { ...DEFAULT_STATE.event, ...(incoming.event || {}) };
+              if (!Array.isArray(mergedEvent.rsvpOptions) || mergedEvent.rsvpOptions.length < 2) {
+                mergedEvent.rsvpOptions = DEFAULT_RSVP_OPTIONS;
+              }
+
               appState = {
-                event: { ...DEFAULT_STATE.event, ...(incoming.event || {}) },
+                event: mergedEvent,
                 guests: newGuests
               };
               localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(appState));
@@ -2141,10 +2192,8 @@
 
       fitDesktopStageToViewport();
 
-      // Load ALL 5 image layers + Supabase data in parallel before hiding spinner
       await Promise.all([
-        resolvePrimaryEnvelope(),
-        resolveInnerAssetsInBackground(),
+        resolveAllAssets(),
         syncFromSupabase(false)
       ]);
 
@@ -2163,4 +2212,3 @@
   </script>
 </body>
 </html>
-
