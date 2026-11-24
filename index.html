@@ -1,0 +1,1872 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thiệp Mời Year End Party 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Great+Vibes&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    :root {
+      --wine-dark: #42070f;
+      --wine-main: #6a0d1b;
+      --wine-velvet: #580a16;
+      --gold-light: #f3dc9b;
+      --gold-main: #c99e48;
+      --gold-dark: #8e6722;
+      --cream-bg: #f6efe3;
+      --cream-paper: #fbf5ea;
+      --text-dark: #2c1316;
+      --text-muted: #6e4f52;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--cream-bg);
+      background-image:
+        radial-gradient(circle at 18% 18%, rgba(201, 158, 72, 0.14) 0%, transparent 45%),
+        radial-gradient(circle at 82% 82%, rgba(106, 13, 27, 0.1) 0%, transparent 50%);
+      color: var(--text-dark);
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ================= TOP ADMIN BAR ================= */
+    #admin-navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 58px;
+      background: linear-gradient(90deg, var(--wine-dark) 0%, var(--wine-main) 50%, var(--wine-dark) 100%);
+      border-bottom: 1.5px solid var(--gold-main);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 22px;
+      z-index: 1000;
+      box-shadow: 0 4px 18px rgba(40, 5, 10, 0.25);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      color: var(--gold-light);
+    }
+
+    .nav-seal {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #f7e2a0, #b8872d);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--wine-dark);
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 16px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+    }
+
+    .nav-title-group h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: #fff6e0;
+    }
+
+    .nav-title-group p {
+      font-size: 10.5px;
+      color: var(--gold-light);
+      opacity: 0.88;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .cloud-badge {
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #a7f3d0;
+      border: 1px solid rgba(167, 243, 208, 0.35);
+    }
+
+    .guest-selector-wrap {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(201, 158, 72, 0.45);
+      padding: 5px 11px;
+      border-radius: 999px;
+      color: #fff;
+      font-size: 12px;
+    }
+
+    .guest-selector-wrap select {
+      background: transparent;
+      border: none;
+      color: var(--gold-light);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      font-size: 12px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .guest-selector-wrap select option {
+      background: var(--wine-dark);
+      color: #fff;
+    }
+
+    .nav-btn {
+      padding: 7px 14px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--gold-main);
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav-btn-outline {
+      background: transparent;
+      color: var(--gold-light);
+    }
+
+    .nav-btn-outline:hover {
+      background: rgba(201, 158, 72, 0.18);
+    }
+
+    .nav-btn-active {
+      background: linear-gradient(135deg, #f1d68a 0%, #c6963c 100%);
+      color: var(--wine-dark);
+      border-color: #f6e2a6;
+      box-shadow: 0 2px 10px rgba(201, 158, 72, 0.35);
+    }
+
+    .badge-count {
+      background: var(--wine-dark);
+      color: var(--gold-light);
+      padding: 1px 7px;
+      border-radius: 999px;
+      font-size: 11px;
+    }
+
+    /* ================= VIEWPORT & SCALING STAGE ================= */
+    #invitation-view {
+      position: fixed;
+      inset: 0;
+      top: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    body.guest-mode #admin-navbar {
+      display: none !important;
+    }
+
+    body.guest-mode #invitation-view {
+      top: 0 !important;
+    }
+
+    #stage-scaler {
+      position: relative;
+      width: 1120px;
+      height: 690px;
+      transform-origin: center center;
+      flex-shrink: 0;
+    }
+
+    /* ================= CLOSED ENVELOPE STATE ================= */
+    #closed-envelope-wrapper {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 560px;
+      cursor: pointer;
+      z-index: 40;
+      transition: opacity 0.45s ease, transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+      text-align: center;
+    }
+
+    #closed-envelope-wrapper.hidden-state {
+      opacity: 0;
+      pointer-events: none;
+      transform: translate(-50%, -44%) scale(0.96);
+    }
+
+    .closed-envelope-box {
+      position: relative;
+      width: 100%;
+    }
+
+    .closed-envelope-img {
+      width: 100%;
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 24px 36px rgba(45, 7, 13, 0.32));
+      transition: transform 0.35s ease;
+    }
+
+    #closed-envelope-wrapper:hover .closed-envelope-img {
+      transform: translateY(-4px) scale(1.012);
+    }
+
+    .wax-pulse-ring {
+      position: absolute;
+      left: 50%;
+      top: 59.5%;
+      width: 76px;
+      height: 76px;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      border: 2px solid rgba(247, 224, 152, 0.85);
+      box-shadow: 0 0 14px rgba(243, 220, 155, 0.45);
+      animation: pulseRing 2.2s infinite ease-out;
+      pointer-events: none;
+    }
+
+    @keyframes pulseRing {
+      0% { transform: translate(-50%, -50%) scale(0.88); opacity: 0.95; }
+      100% { transform: translate(-50%, -50%) scale(1.55); opacity: 0; }
+    }
+
+    .open-hint-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 6px;
+      padding: 8px 20px;
+      border-radius: 999px;
+      background: rgba(255, 251, 243, 0.92);
+      border: 1px solid var(--gold-main);
+      color: var(--wine-main);
+      font-size: 12.5px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      box-shadow: 0 6px 18px rgba(66, 7, 15, 0.12);
+    }
+
+    /* ================= OPENED ENVELOPE & CARD ASSEMBLY ================= */
+    #opened-scene {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+
+    #opened-scene.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .envelope-assembly {
+      position: absolute;
+      left: 110px;
+      bottom: 20px;
+      width: 484px;
+      height: 650px;
+    }
+
+    /* Perfectly aligned back layer */
+    .env-back-layer {
+      position: absolute;
+      left: -10px;
+      bottom: 0;
+      width: 504px;
+      height: 438px;
+      object-fit: fill;
+      z-index: 1;
+      pointer-events: none;
+      filter: drop-shadow(0 20px 30px rgba(45, 7, 13, 0.25));
+    }
+
+    /* Lace Invitation Card */
+    .lace-letter-sheet {
+      position: absolute;
+      left: 25px;
+      bottom: 22px;
+      width: 434px;
+      height: 598px;
+      z-index: 2;
+      transform: translateY(155px);
+      opacity: 0;
+      transition:
+        transform 1.05s cubic-bezier(0.22, 1, 0.36, 1) 0.12s,
+        opacity 0.55s ease 0.12s;
+    }
+
+    #opened-scene.active .lace-letter-sheet {
+      transform: translateY(0px);
+      opacity: 1;
+    }
+
+    .lace-bg-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: fill;
+      z-index: 1;
+      pointer-events: none;
+      filter: drop-shadow(0 6px 16px rgba(40, 10, 15, 0.14));
+    }
+
+    .letter-safe-content {
+      position: absolute;
+      top: 62px;
+      left: 40px;
+      right: 40px;
+      height: 365px;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .env-front-pocket {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 484px;
+      height: auto;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    /* Typography locked inside safe-zone */
+    .letter-header-group { width: 100%; }
+
+    .letter-script-title {
+      font-family: 'Great Vibes', cursive;
+      font-size: 36px;
+      line-height: 1.05;
+      color: var(--wine-main);
+      margin-bottom: 2px;
+      white-space: nowrap;
+    }
+
+    .letter-subtitle {
+      font-size: 8.5px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold-dark);
+      margin-bottom: 2px;
+    }
+
+    .letter-event-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 18.5px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--wine-dark);
+      line-height: 1.15;
+    }
+
+    .gold-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 74%;
+      margin: 0 auto;
+    }
+
+    .gold-divider span.line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-main), transparent);
+    }
+
+    .gold-divider span.diamond {
+      width: 5px;
+      height: 5px;
+      background: var(--wine-main);
+      transform: rotate(45deg);
+    }
+
+    .guest-salutation-box { width: 100%; }
+
+    .guest-salutation-label {
+      font-size: 8px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .guest-salutation-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 16.5px;
+      font-weight: 700;
+      color: var(--wine-main);
+      line-height: 1.2;
+    }
+
+    .guest-custom-note {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 12.5px;
+      color: #4a282c;
+      margin-top: 1px;
+      line-height: 1.2;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .event-meta-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      width: 100%;
+    }
+
+    .meta-row-label {
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold-dark);
+    }
+
+    .meta-row-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-dark);
+      line-height: 1.15;
+    }
+
+    .meta-row-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.15;
+    }
+
+    .letter-closing-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--wine-main);
+      line-height: 1.2;
+      width: 100%;
+    }
+
+    /* ================= PERSONALIZED PHOTO EXTRACTED TO RIGHT ================= */
+    .photo-extract-card {
+      position: absolute;
+      left: 665px;
+      top: 24px;
+      width: 222px;
+      height: 394px;
+      border-radius: 14px;
+      padding: 6px;
+      background: linear-gradient(145deg, #f5df9e 0%, #b88428 50%, #f3da94 100%);
+      box-shadow: 0 20px 38px rgba(42, 7, 13, 0.28);
+      z-index: 6;
+      opacity: 0;
+      transform: translate(-250px, 160px) scale(0.55) rotate(-8deg);
+      transition:
+        transform 1.15s cubic-bezier(0.2, 0.95, 0.3, 1) 0.28s,
+        opacity 0.5s ease 0.28s;
+    }
+
+    #opened-scene.active .photo-extract-card {
+      opacity: 1;
+      transform: translate(0, 0) scale(1) rotate(1.5deg);
+    }
+
+    .photo-inner-frame {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #23060a;
+    }
+
+    .photo-inner-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* ================= 3D FLIP RSVP CARD ================= */
+    .rsvp-flip-container {
+      position: absolute;
+      left: 730px;
+      top: 438px;
+      width: 295px;
+      height: 215px;
+      perspective: 1100px;
+      z-index: 8;
+      opacity: 0;
+      transform: translate(-280px, -40px) scale(0.55) rotate(8deg);
+      transition:
+        transform 1.2s cubic-bezier(0.2, 0.95, 0.3, 1) 0.42s,
+        opacity 0.5s ease 0.42s;
+    }
+
+    #opened-scene.active .rsvp-flip-container {
+      opacity: 1;
+      transform: translate(0, 0) scale(1) rotate(-1deg);
+    }
+
+    .rsvp-flip-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.75s cubic-bezier(0.4, 0.2, 0.2, 1);
+      transform-style: preserve-3d;
+    }
+
+    .rsvp-flip-container.is-flipped .rsvp-flip-inner {
+      transform: rotateY(180deg);
+    }
+
+    .rsvp-face {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      background: var(--cream-paper);
+      border: 1.5px solid var(--gold-main);
+      border-radius: 14px;
+      padding: 16px 18px;
+      box-shadow: 0 18px 34px rgba(45, 7, 13, 0.24);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .rsvp-face::before {
+      content: "";
+      position: absolute;
+      inset: 5px;
+      border: 1px solid rgba(201, 158, 72, 0.45);
+      border-radius: 10px;
+      pointer-events: none;
+    }
+
+    .rsvp-back { transform: rotateY(180deg); }
+
+    .rsvp-kicker {
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold-dark);
+      text-align: center;
+    }
+
+    .rsvp-question {
+      font-family: 'Playfair Display', serif;
+      font-size: 15.5px;
+      font-weight: 700;
+      color: var(--wine-dark);
+      text-align: center;
+      line-height: 1.3;
+      margin: 4px 0 8px 0;
+    }
+
+    .rsvp-choice-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .btn-rsvp-yes {
+      width: 100%;
+      padding: 9px 12px;
+      border-radius: 999px;
+      border: 1px solid #e7c572;
+      background: linear-gradient(135deg, var(--wine-main) 0%, var(--wine-dark) 100%);
+      color: #fff6e0;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-rsvp-no {
+      width: 100%;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--gold-main);
+      background: #fffdf8;
+      color: var(--wine-main);
+      font-size: 11.5px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .rsvp-status-pill {
+      text-align: center;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .rsvp-back-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .rsvp-selected-tag {
+      font-size: 10.5px;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: rgba(106, 13, 27, 0.1);
+      color: var(--wine-main);
+    }
+
+    .btn-flip-back {
+      background: none;
+      border: none;
+      color: var(--gold-dark);
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    .rsvp-textarea {
+      width: 100%;
+      height: 78px;
+      resize: none;
+      border-radius: 8px;
+      border: 1px solid rgba(201, 158, 72, 0.65);
+      background: #fffdf9;
+      padding: 8px 10px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 11.5px;
+      color: var(--text-dark);
+      outline: none;
+    }
+
+    .btn-submit-rsvp {
+      width: 100%;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: none;
+      background: linear-gradient(135deg, #e5c470 0%, #b58429 100%);
+      color: var(--wine-dark);
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    #btn-reclose {
+      position: absolute;
+      left: 24px;
+      bottom: 20px;
+      z-index: 20;
+      padding: 7px 14px;
+      border-radius: 999px;
+      background: rgba(255, 251, 243, 0.9);
+      border: 1px solid var(--gold-main);
+      color: var(--wine-main);
+      font-size: 11.5px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    }
+
+    /* ================= ADMIN MANAGEMENT VIEW ================= */
+    #admin-view {
+      position: fixed;
+      inset: 0;
+      top: 58px;
+      background: var(--cream-bg);
+      overflow-y: auto;
+      padding: 26px 32px 60px 32px;
+      display: none;
+      z-index: 500;
+    }
+
+    #admin-view.active { display: block; }
+
+    .admin-container {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    .admin-card {
+      background: #fffcf6;
+      border: 1px solid rgba(201, 158, 72, 0.55);
+      border-radius: 16px;
+      padding: 20px 24px;
+      box-shadow: 0 8px 24px rgba(55, 10, 16, 0.06);
+    }
+
+    .admin-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding-bottom: 14px;
+      margin-bottom: 16px;
+      border-bottom: 1px solid rgba(201, 158, 72, 0.3);
+    }
+
+    .admin-card-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 19px;
+      color: var(--wine-dark);
+    }
+
+    .admin-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .form-group label {
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--wine-main);
+    }
+
+    .form-control {
+      padding: 9px 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(201, 158, 72, 0.65);
+      background: #fff;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px;
+      color: var(--text-dark);
+      outline: none;
+    }
+
+    .form-control:focus { border-color: var(--wine-main); }
+
+    .btn-primary-wine {
+      padding: 9px 18px;
+      border-radius: 999px;
+      border: 1px solid var(--gold-main);
+      background: linear-gradient(135deg, var(--wine-main), var(--wine-dark));
+      color: #fff6e0;
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th {
+      text-align: left;
+      padding: 11px 12px;
+      background: #f4e8d1;
+      color: var(--wine-dark);
+      font-size: 11.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    td {
+      padding: 12px;
+      border-bottom: 1px solid rgba(201, 158, 72, 0.25);
+      vertical-align: middle;
+    }
+
+    .thumb-portrait {
+      width: 42px;
+      height: 74px;
+      border-radius: 6px;
+      object-fit: cover;
+      border: 1px solid var(--gold-main);
+      background: #2b070c;
+    }
+
+    .status-pill {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11.5px;
+      font-weight: 600;
+    }
+    .status-yes { background: #e1f5e8; color: #166534; }
+    .status-no { background: #fee2e2; color: #991b1b; }
+    .status-pending { background: #fef3c7; color: #92400e; }
+
+    .action-btns { display: flex; flex-wrap: wrap; gap: 6px; }
+    .btn-sm {
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid rgba(201, 158, 72, 0.6);
+      background: #fff;
+      color: var(--wine-dark);
+    }
+    .btn-sm:hover { background: #f7ebd4; }
+    .btn-sm-danger { color: #b91c1c; border-color: #fca5a5; }
+    .btn-sm-danger:hover { background: #fef2f2; }
+
+    /* ================= MODAL ================= */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(28, 4, 8, 0.65);
+      backdrop-filter: blur(3px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      padding: 20px;
+    }
+    .modal-backdrop.open { display: flex; }
+    .modal-box {
+      background: #fffcf6;
+      border: 1.5px solid var(--gold-main);
+      border-radius: 16px;
+      width: 100%;
+      max-width: 520px;
+      padding: 22px 24px;
+      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.35);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(201, 158, 72, 0.35);
+      padding-bottom: 10px;
+    }
+    .modal-header h3 { font-family: 'Playfair Display', serif; font-size: 18px; color: var(--wine-dark); }
+
+    .toast-notif {
+      position: fixed;
+      bottom: 22px;
+      right: 22px;
+      background: var(--wine-dark);
+      color: var(--gold-light);
+      border: 1px solid var(--gold-main);
+      padding: 11px 18px;
+      border-radius: 10px;
+      font-size: 12.5px;
+      font-weight: 500;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      z-index: 3000;
+      opacity: 0;
+      transform: translateY(15px);
+      pointer-events: none;
+      transition: all 0.3s ease;
+    }
+    .toast-notif.show { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 820px) {
+      body { overflow-y: auto; }
+      #invitation-view { position: relative; inset: auto; min-height: calc(100vh - 58px); padding: 20px 10px; overflow-y: auto; }
+      #stage-scaler { width: 100% !important; height: auto !important; transform: none !important; display: flex; flex-direction: column; align-items: center; gap: 20px; }
+      #closed-envelope-wrapper { position: relative; left: auto; top: auto; transform: none !important; width: 92%; max-width: 420px; margin: 40px auto; }
+      #opened-scene { position: relative; display: none; flex-direction: column; align-items: center; gap: 18px; width: 100%; }
+      #opened-scene.active { display: flex; }
+      .envelope-assembly { position: relative; left: auto; bottom: auto; width: 340px; height: 465px; }
+      .env-back-layer { left: -7px; width: 354px; height: 310px; }
+      .env-front-pocket { width: 340px; }
+      .lace-letter-sheet { left: 17px; bottom: 18px; width: 306px; height: 425px; }
+      .letter-safe-content { top: 44px; left: 24px; right: 24px; height: 265px; }
+      .letter-script-title { font-size: 25px; }
+      .letter-event-name { font-size: 13.5px; }
+      .guest-salutation-name { font-size: 13px; }
+      .meta-row-value { font-size: 11.5px; }
+      .photo-extract-card, .rsvp-flip-container { position: relative; left: auto; top: auto; transform: none !important; opacity: 1 !important; }
+      #btn-reclose { position: relative; left: auto; bottom: auto; margin-top: 10px; }
+      .admin-grid-3 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP ADMIN NAVIGATION -->
+  <header id="admin-navbar">
+    <div class="nav-brand">
+      <div class="nav-seal">Y</div>
+      <div class="nav-title-group">
+        <h1>YEAR END PARTY 2026</h1>
+        <p>Hệ thống Thiệp Mời Cá Nhân Hóa & Quản Lý Khách Mời</p>
+      </div>
+    </div>
+
+    <div class="nav-actions">
+      <span id="cloud-status-badge" class="cloud-badge">● Đang kết nối Supabase...</span>
+      <div class="guest-selector-wrap">
+        <span>Khách đang xem:</span>
+        <select id="preview-guest-select" onchange="selectGuestFromDropdown(this.value)"></select>
+      </div>
+      <button id="tab-preview-btn" class="nav-btn nav-btn-active" onclick="switchTab('preview')">
+        ✉ Xem Thiệp
+      </button>
+      <button id="tab-admin-btn" class="nav-btn nav-btn-outline" onclick="switchTab('admin')">
+        ☰ Quản Lý Danh Sách <span id="guest-count-badge" class="badge-count">0</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN INVITATION STAGE -->
+  <main id="invitation-view">
+    <div id="stage-scaler">
+      <!-- 1. CLOSED ENVELOPE -->
+      <div id="closed-envelope-wrapper" onclick="openEnvelope()">
+        <div class="closed-envelope-box">
+          <img id="img-closed-env" class="closed-envelope-img" alt="Phong bì đóng" />
+          <div class="wax-pulse-ring"></div>
+        </div>
+        <div class="open-hint-pill" id="card-open-hint">✦ Chạm vào dấu sáp để mở thiệp mời ✦</div>
+      </div>
+
+      <!-- 2. OPENED SCENE -->
+      <div id="opened-scene">
+        <!-- Left: 3-Layer Envelope + Rising Lace Card -->
+        <div class="envelope-assembly">
+          <img id="img-open-env-back" class="env-back-layer" alt="Mặt sau phong bì mở" />
+
+          <div class="lace-letter-sheet">
+            <img id="img-lace-border" class="lace-bg-img" alt="Khung viền ren" />
+
+            <div class="letter-safe-content">
+              <div class="letter-header-group">
+                <div class="letter-script-title" id="card-script-title">Trân Trọng Kính Mời</div>
+                <div class="letter-subtitle" id="card-subtitle">THAM DỰ ĐÊM TIỆC TỔNG KẾT</div>
+                <div class="letter-event-name" id="card-event-title">YEAR END PARTY 2026</div>
+              </div>
+
+              <div class="gold-divider">
+                <span class="line"></span>
+                <span class="diamond"></span>
+                <span class="line"></span>
+              </div>
+
+              <div class="guest-salutation-box">
+                <div class="guest-salutation-label" id="card-salutation-prefix">Kính gửi Quý khách</div>
+                <div class="guest-salutation-name" id="card-guest-name">Ông Nguyễn Minh Khôi</div>
+                <div class="guest-custom-note" id="card-guest-note">Trân trọng kính mời anh cùng chung vui khoảnh khắc tổng kết cuối năm!</div>
+              </div>
+
+              <div class="event-meta-stack">
+                <div>
+                  <div class="meta-row-label" id="card-label-date">📅 NGÀY TỔ CHỨC</div>
+                  <div class="meta-row-value" id="card-event-date">Thứ Sáu, 18 Tháng 12 Năm 2026</div>
+                </div>
+                <div>
+                  <div class="meta-row-label" id="card-label-time">🕒 THỜI GIAN</div>
+                  <div class="meta-row-value" id="card-event-time">18:00 – 22:00</div>
+                </div>
+                <div>
+                  <div class="meta-row-label" id="card-label-venue">📍 ĐỊA ĐIỂM</div>
+                  <div class="meta-row-value" id="card-event-venue">Riverside Event Hall</div>
+                  <div class="meta-row-sub" id="card-event-address">Số 9 Đại lộ Ven Sông, Hà Nội</div>
+                </div>
+              </div>
+
+              <div class="gold-divider">
+                <span class="line"></span>
+                <span class="diamond"></span>
+                <span class="line"></span>
+              </div>
+
+              <div class="letter-closing-quote" id="card-closing-quote">
+                Cùng nâng ly chào đón một năm rực rỡ thành công!
+              </div>
+            </div>
+          </div>
+
+          <img id="img-open-env-front" class="env-front-pocket" alt="Mặt trước túi phong bì" />
+        </div>
+
+        <!-- Top Right: Extracted Personalized Portrait -->
+        <div class="photo-extract-card">
+          <div class="photo-inner-frame">
+            <img id="card-guest-photo" alt="Ảnh cá nhân hóa" />
+          </div>
+        </div>
+
+        <!-- Bottom Right Offset: 3D Flip RSVP Card -->
+        <div id="rsvp-card-container" class="rsvp-flip-container">
+          <div class="rsvp-flip-inner">
+            <div class="rsvp-face rsvp-front">
+              <div class="rsvp-kicker" id="card-rsvp-kicker">PHẢN HỒI THAM DỰ</div>
+              <div class="rsvp-question" id="card-rsvp-question">Quý khách xác nhận tham gia cùng chúng tôi chứ?</div>
+              <div class="rsvp-choice-group">
+                <button class="btn-rsvp-yes" id="card-rsvp-yes-btn" onclick="chooseRsvp('yes')">✦ Sẽ tham dự đêm tiệc</button>
+                <button class="btn-rsvp-no" id="card-rsvp-no-btn" onclick="chooseRsvp('no')">Rất tiếc, không thể tham dự</button>
+              </div>
+              <div class="rsvp-status-pill" id="rsvp-front-status">Chưa gửi phản hồi</div>
+            </div>
+
+            <div class="rsvp-face rsvp-back">
+              <div class="rsvp-back-header">
+                <span class="rsvp-selected-tag" id="rsvp-back-choice-label">✓ Sẽ tham dự</span>
+                <button class="btn-flip-back" onclick="flipRsvpBack()">← Đổi lựa chọn</button>
+              </div>
+              <textarea id="rsvp-message-input" class="rsvp-textarea" placeholder="Quý khách có lời nhắn gửi gì tới Ban Tổ Chức không? (Không bắt buộc)..."></textarea>
+              <button class="btn-submit-rsvp" onclick="submitRsvpResponse()">Gửi Xác Nhận & Lời Nhắn</button>
+            </div>
+          </div>
+        </div>
+
+        <button id="btn-reclose" onclick="closeEnvelope()">↺ Đóng phong bì</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- ADMIN DASHBOARD VIEW -->
+  <section id="admin-view">
+    <div class="admin-container">
+
+      <!-- 1. Full Text & Event Editor -->
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <div>
+            <h2>1. Chỉnh Sửa Toàn Bộ Nội Dung & Diễn Đạt Trên Thiệp (Lưu Vĩnh Viễn Lên Cloud)</h2>
+            <p style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">
+              Mọi dòng chữ từ tiêu đề thư pháp, lời mở đầu, nhãn ngày/giờ/địa điểm cho tới câu hỏi thẻ xác nhận đều chỉnh sửa được tại đây.
+            </p>
+          </div>
+          <button class="btn-primary-wine" onclick="saveEventSettings()">💾 Lưu Tất Cả Thay Đổi</button>
+        </div>
+
+        <div class="admin-grid-3">
+          <div class="form-group">
+            <label>Tiêu đề thư pháp lớn</label>
+            <input id="input-script-title" class="form-control" type="text" />
+          </div>
+          <div class="form-group">
+            <label>Dòng tiêu đề phụ (chữ in nhỏ)</label>
+            <input id="input-event-subtitle" class="form-control" type="text" />
+          </div>
+          <div class="form-group">
+            <label>Tên chương trình chính</label>
+            <input id="input-event-title" class="form-control" type="text" />
+          </div>
+
+          <div class="form-group">
+            <label>Dòng dẫn trước tên khách</label>
+            <input id="input-salutation-prefix" class="form-control" type="text" />
+          </div>
+          <div class="form-group">
+            <label>Dòng gợi ý dưới phong bì đóng</label>
+            <input id="input-open-hint" class="form-control" type="text" />
+          </div>
+          <div class="form-group">
+            <label>Câu chúc cuối thiệp</label>
+            <input id="input-event-quote" class="form-control" type="text" />
+          </div>
+
+          <div class="form-group">
+            <label>Nhãn mục Ngày (kèm icon)</label>
+            <input id="input-label-date" class="form-control" type="text" />
+          </div>
+          <div class="form-group">
+            <label>Nội dung Ngày tổ chức</label>
+            <input id="input-event-date" class="form-control" type="text" />
+          </div>
+          <div class="form-group">
+            <label>Nhãn mục Thời gian</label>
+            <input id="input-label-time" class="form-control" type="text" />
+          </div>
+
+          <div class="form-group">
+            <label>Nội dung Thời gian</label>
+            <input id="input-event-time" class="form-control" type="text" />
+          </div>
+          <div class="form-group">
+            <label>Nhãn mục Địa điểm</label>
+            <input id="input-label-venue" class="form-control" type="text" />
+          </div>
+          <div class="form-group">
+            <label>Tên Địa điểm</label>
+            <input id="input-event-venue" class="form-control" type="text" />
+          </div>
+
+          <div class="form-group">
+            <label>Địa chỉ chi tiết</label>
+            <input id="input-event-address" class="form-control" type="text" />
+          </div>
+          <div class="form-group">
+            <label>Câu hỏi trên thẻ xác nhận (RSVP)</label>
+            <input id="input-rsvp-question" class="form-control" type="text" />
+          </div>
+          <div class="form-group">
+            <label>Nút đồng ý / Nút từ chối (cách nhau dấu |)</label>
+            <input id="input-rsvp-buttons" class="form-control" type="text" />
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Guest List Management -->
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <div>
+            <h2>2. Danh Sách Thiệp Mời Cá Nhân Hóa & Phản Hồi Từ Khách</h2>
+            <p style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">
+              Mỗi khách mời có tên, lời nhắn riêng, ảnh chân dung tỷ lệ dọc (9:16) và đường dẫn chia sẻ độc lập.
+            </p>
+          </div>
+          <button class="btn-primary-wine" onclick="openGuestModal()">+ Thêm Khách Mời Mới</button>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Ảnh Cá Nhân</th>
+                <th>Tên Khách Mời & Lời Nhắn Riêng</th>
+                <th>Trạng Thái Xác Nhận</th>
+                <th>Lời Nhắn Khách Gửi Về</th>
+                <th>Thao Tác & Chia Sẻ Link</th>
+              </tr>
+            </thead>
+            <tbody id="guest-table-body"></tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ADD / EDIT GUEST MODAL -->
+  <div id="guest-modal" class="modal-backdrop">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 id="guest-modal-title">Thêm Khách Mời Mới</h3>
+        <button class="btn-sm" onclick="closeGuestModal()">✕</button>
+      </div>
+      <input type="hidden" id="edit-guest-id" />
+      <div class="form-group">
+        <label>Danh xưng & Họ tên khách mời (Ví dụ: Ông Nguyễn Minh Khôi)</label>
+        <input id="modal-guest-name" class="form-control" type="text" placeholder="Nhập họ tên khách mời..." />
+      </div>
+      <div class="form-group">
+        <label>Nội dung lời mời riêng cho vị khách này</label>
+        <input id="modal-guest-note" class="form-control" type="text" placeholder="Ví dụ: Trân trọng kính mời anh cùng chung vui..." />
+      </div>
+      <div class="form-group">
+        <label>Ảnh cá nhân hóa (Khung đứng 9:16 giống ảnh mẫu)</label>
+        <input id="modal-guest-photo-file" class="form-control" type="file" accept="image/*" onchange="previewModalPhoto(event)" />
+        <div style="margin-top: 8px; display: flex; align-items: center; gap: 12px;">
+          <img id="modal-photo-preview" class="thumb-portrait" alt="Xem trước ảnh" />
+          <span style="font-size: 11.5px; color: var(--text-muted);">Tự động tối ưu dung lượng để lưu đồng bộ lên Supabase.</span>
+        </div>
+      </div>
+      <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 6px;">
+        <button class="btn-sm" onclick="closeGuestModal()">Hủy</button>
+        <button class="btn-primary-wine" onclick="saveGuestForm()">Lưu Khách Mời</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SHARE LINK MODAL -->
+  <div id="share-modal" class="modal-backdrop">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3>Chia Sẻ Link Thiệp Riêng</h3>
+        <button class="btn-sm" onclick="closeShareModal()">✕</button>
+      </div>
+      <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.5;">
+        Gửi đường dẫn bên dưới cho <strong id="share-guest-name" style="color: var(--wine-dark);"></strong>. Khi mở link này trên Vercel, giao diện quản lý sẽ ẩn hoàn toàn, khách chỉ xem được thiệp cá nhân của mình và xác nhận tham dự.
+      </p>
+      <div style="display: flex; gap: 8px;">
+        <input id="share-link-input" class="form-control" type="text" readonly style="flex:1; background:#f8f2e6;" />
+        <button class="btn-primary-wine" onclick="copyShareLink()">Sao chép</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast-notif"></div>
+
+  <script>
+    /* =========================================================================
+       1. CẤU HÌNH SUPABASE CỦA BẠN
+       ========================================================================= */
+    const SUPABASE_URL = 'https://wmvtfelhzvcpokmfzjka.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndtdnRmZWxoenZjcG9rbWZ6amthIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTU1MTYwMzAsImV4cCI6MjExMTA5MjAzMH0.yW2URcci_pxREPevhEF8RaoieO5nc6oGk332R1zsywg';
+    const SUPABASE_RECORD_ID = 'yep-2026-main';
+
+    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    /* ================= STORAGE & DEFAULT STATE ================= */
+    const LOCAL_STORAGE_KEY = 'yep2026_cloud_backup_v2';
+
+    const DEFAULT_STATE = {
+      event: {
+        scriptTitle: 'Trân Trọng Kính Mời',
+        subtitle: 'THAM DỰ ĐÊM TIỆC TỔNG KẾT',
+        title: 'YEAR END PARTY 2026',
+        salutationPrefix: 'Kính gửi Quý khách',
+        openHint: '✦ Chạm vào dấu sáp để mở thiệp mời ✦',
+        labelDate: '📅 NGÀY TỔ CHỨC',
+        date: 'Thứ Sáu, 18 Tháng 12 Năm 2026',
+        labelTime: '🕒 THỜI GIAN',
+        time: '18:00 – 22:00',
+        labelVenue: '📍 ĐỊA ĐIỂM',
+        venue: 'Riverside Event Hall',
+        address: 'Số 9 Đại lộ Ven Sông, Hà Nội',
+        quote: 'Cùng nâng ly chào đón một năm rực rỡ thành công!',
+        rsvpQuestion: 'Quý khách xác nhận tham gia cùng chúng tôi chứ?',
+        rsvpYesLabel: '✦ Sẽ tham dự đêm tiệc',
+        rsvpNoLabel: 'Rất tiếc, không thể tham dự'
+      },
+      guests: [
+        {
+          id: 'khach-01',
+          name: 'Ông Nguyễn Minh Khôi',
+          note: 'Trân trọng kính mời anh cùng chung vui khoảnh khắc tổng kết cuối năm!',
+          photo: '',
+          rsvp: 'pending',
+          message: ''
+        },
+        {
+          id: 'khach-02',
+          name: 'Bà Trần Thanh Thảo',
+          note: 'Sự hiện diện của chị là niềm vinh hạnh lớn của Ban Tổ Chức!',
+          photo: '',
+          rsvp: 'yes',
+          message: 'Chị sẽ có mặt đúng giờ, hẹn gặp mọi người!'
+        }
+      ]
+    };
+
+    let appState = loadLocalBackup();
+    let processedAssets = {
+      closedEnv: '',
+      openEnvBack: '',
+      openEnvFront: '',
+      laceFrame: '',
+      defaultPortrait: ''
+    };
+    let currentGuestId = appState.guests[0]?.id || 'khach-01';
+    let pendingRsvpChoice = 'yes';
+    let modalTempPhoto = '';
+
+    function loadLocalBackup() {
+      try {
+        const raw = localStorage.getItem(LOCAL_STORAGE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          return {
+            event: { ...DEFAULT_STATE.event, ...(parsed.event || {}) },
+            guests: Array.isArray(parsed.guests) && parsed.guests.length ? parsed.guests : DEFAULT_STATE.guests
+          };
+        }
+      } catch (e) {}
+      return JSON.parse(JSON.stringify(DEFAULT_STATE));
+    }
+
+    function updateCloudBadge(text, ok = true) {
+      const badge = document.getElementById('cloud-status-badge');
+      if (!badge) return;
+      badge.textContent = text;
+      badge.style.color = ok ? '#a7f3d0' : '#fde68a';
+      badge.style.borderColor = ok ? 'rgba(167, 243, 208, 0.4)' : 'rgba(253, 230, 138, 0.45)';
+    }
+
+    async function syncFromSupabase() {
+      try {
+        updateCloudBadge('↻ Đang tải từ Supabase...', true);
+        const { data, error } = await supabaseClient
+          .from('invitation_store')
+          .select('payload')
+          .eq('id', SUPABASE_RECORD_ID)
+          .maybeSingle();
+
+        if (error) throw error;
+
+        if (data && data.payload) {
+          appState = {
+            event: { ...DEFAULT_STATE.event, ...(data.payload.event || {}) },
+            guests: Array.isArray(data.payload.guests) && data.payload.guests.length
+              ? data.payload.guests
+              : appState.guests
+          };
+          localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(appState));
+        } else {
+          await saveAppState(true);
+        }
+        updateCloudBadge('● Đã đồng bộ Supabase Cloud', true);
+      } catch (err) {
+        console.error(err);
+        updateCloudBadge('● Lỗi kết nối Supabase (Kiểm tra bảng SQL)', false);
+      }
+    }
+
+    async function saveAppState(silent = false) {
+      try {
+        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(appState));
+      } catch (e) {}
+
+      try {
+        updateCloudBadge('↻ Đang lưu lên Cloud...', true);
+        const { error } = await supabaseClient
+          .from('invitation_store')
+          .upsert({
+            id: SUPABASE_RECORD_ID,
+            payload: appState,
+            updated_at: new Date().toISOString()
+          });
+
+        if (error) throw error;
+        updateCloudBadge('● Đã lưu lên Supabase Cloud', true);
+      } catch (err) {
+        console.error(err);
+        updateCloudBadge('● Lỗi lưu Cloud', false);
+        if (!silent) showToast('Lỗi lưu Supabase! Hãy chắc chắn bạn đã chạy lệnh SQL tạo bảng invitation_store.');
+      }
+    }
+
+    /* ================= IMAGE COMPRESSION & TRANSPARENCY PROCESSING ================= */
+    function compressImageFile(file, maxWidth = 650) {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const img = new Image();
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            const scale = Math.min(1, maxWidth / img.width);
+            canvas.width = Math.round(img.width * scale);
+            canvas.height = Math.round(img.height * scale);
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            resolve(canvas.toDataURL('image/jpeg', 0.82));
+          };
+          img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function processImageTransparency(src, mode) {
+      return new Promise((resolve) => {
+        if (!src) return resolve('');
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = () => {
+          try {
+            if (mode === 'none') return resolve(src);
+            const canvas = document.createElement('canvas');
+            const w = img.naturalWidth;
+            const h = img.naturalHeight;
+            canvas.width = w;
+            canvas.height = h;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0);
+            const imgData = ctx.getImageData(0, 0, w, h);
+            const data = imgData.data;
+
+            if (mode === 'remove-black') {
+              for (let i = 0; i < data.length; i += 4) {
+                const brightness = (data[i] + data[i + 1] + data[i + 2]) / 3;
+                if (brightness < 30) data[i + 3] = 0;
+                else if (brightness < 58) data[i + 3] = Math.round(((brightness - 30) / 28) * 255);
+              }
+            } else if (mode === 'remove-outer-white') {
+              const visited = new Uint8Array(w * h);
+              const queue = new Int32Array(w * h);
+              let head = 0, tail = 0;
+
+              const isLightOuter = (idx) => {
+                const p = idx * 4;
+                const r = data[p], g = data[p + 1], b = data[p + 2];
+                const sat = Math.max(r, g, b) - Math.min(r, g, b);
+                return (r > 180 && g > 180 && b > 180 && sat < 26);
+              };
+
+              for (let x = 0; x < w; x++) {
+                if (isLightOuter(x)) { visited[x] = 1; queue[tail++] = x; }
+                const bIdx = (h - 1) * w + x;
+                if (isLightOuter(bIdx)) { visited[bIdx] = 1; queue[tail++] = bIdx; }
+              }
+              for (let y = 0; y < h; y++) {
+                const lIdx = y * w;
+                if (!visited[lIdx] && isLightOuter(lIdx)) { visited[lIdx] = 1; queue[tail++] = lIdx; }
+                const rIdx = y * w + (w - 1);
+                if (!visited[rIdx] && isLightOuter(rIdx)) { visited[rIdx] = 1; queue[tail++] = rIdx; }
+              }
+
+              while (head < tail) {
+                const curr = queue[head++];
+                data[curr * 4 + 3] = 0;
+                const cx = curr % w;
+                const cy = (curr - cx) / w;
+                if (cx > 0 && !visited[curr - 1] && isLightOuter(curr - 1)) { visited[curr - 1] = 1; queue[tail++] = curr - 1; }
+                if (cx < w - 1 && !visited[curr + 1] && isLightOuter(curr + 1)) { visited[curr + 1] = 1; queue[tail++] = curr + 1; }
+                if (cy > 0 && !visited[curr - w] && isLightOuter(curr - w)) { visited[curr - w] = 1; queue[tail++] = curr - w; }
+                if (cy < h - 1 && !visited[curr + w] && isLightOuter(curr + w)) { visited[curr + w] = 1; queue[tail++] = curr + w; }
+              }
+            }
+
+            ctx.putImageData(imgData, 0, 0);
+            resolve(canvas.toDataURL('image/png'));
+          } catch (err) {
+            resolve(src);
+          }
+        };
+        img.onerror = () => resolve('');
+        img.src = src;
+      });
+    }
+
+    async function tryLoadFirstAvailable(candidates, mode) {
+      for (const path of candidates) {
+        if (!path) continue;
+        const res = await processImageTransparency(path, mode);
+        if (res) return res;
+      }
+      return '';
+    }
+
+    async function resolveAllAssets() {
+      const nfc = (s) => encodeURI(s.normalize('NFC'));
+      const nfd = (s) => encodeURI(s.normalize('NFD'));
+
+      processedAssets.closedEnv = await tryLoadFirstAvailable([
+        nfc('./Ảnh ChatGPT 16_16_04 24 thg 11, 2026.png'),
+        nfd('./Ảnh ChatGPT 16_16_04 24 thg 11, 2026.png')
+      ], 'remove-outer-white');
+
+      processedAssets.openEnvBack = await tryLoadFirstAvailable([
+        nfc('./Phong bì nhung đỏ mở nắp_2.webp'),
+        nfd('./Phong bì nhung đỏ mở nắp_2.webp'),
+        nfc('./Phong bì nhung đỏ mở nắp.webp'),
+        nfd('./Phong bì nhung đỏ mở nắp.webp')
+      ], 'remove-outer-white');
+
+      processedAssets.openEnvFront = await tryLoadFirstAvailable([
+        nfc('./Phong bì nhung đỏ đô niêm sáp vàng.webp'),
+        nfd('./Phong bì nhung đỏ đô niêm sáp vàng.webp')
+      ], 'none');
+
+      processedAssets.laceFrame = await tryLoadFirstAvailable([
+        nfc('./Ảnh ChatGPT 16_16_15 24 thg 11, 2026_2.jpg'),
+        nfd('./Ảnh ChatGPT 16_16_15 24 thg 11, 2026_2.jpg'),
+        nfc('./Ảnh ChatGPT 16_16_15 24 thg 11, 2026.png'),
+        nfd('./Ảnh ChatGPT 16_16_15 24 thg 11, 2026.png')
+      ], 'remove-black');
+
+      processedAssets.defaultPortrait = await tryLoadFirstAvailable([
+        nfc('./Ảnh ChatGPT 16_16_10 24 thg 11, 2026.png'),
+        nfd('./Ảnh ChatGPT 16_16_10 24 thg 11, 2026.png')
+      ], 'none');
+
+      document.getElementById('img-closed-env').src = processedAssets.closedEnv;
+      document.getElementById('img-open-env-back').src = processedAssets.openEnvBack;
+      document.getElementById('img-open-env-front').src = processedAssets.openEnvFront;
+      document.getElementById('img-lace-border').src = processedAssets.laceFrame;
+    }
+
+    /* ================= AUTO-FIT STAGE TO VIEWPORT ================= */
+    function fitDesktopStageToViewport() {
+      const scaler = document.getElementById('stage-scaler');
+      const container = document.getElementById('invitation-view');
+      if (!scaler || !container) return;
+
+      if (window.innerWidth <= 820) {
+        scaler.style.transform = 'none';
+        return;
+      }
+
+      const availW = container.clientWidth - 28;
+      const availH = container.clientHeight - 16;
+      const scale = Math.min(availW / 1120, availH / 690, 1.05);
+      scaler.style.transform = `scale(${Math.max(scale, 0.45)})`;
+    }
+
+    window.addEventListener('resize', fitDesktopStageToViewport);
+
+    /* ================= ENVELOPE INTERACTION ================= */
+    function openEnvelope() {
+      document.getElementById('closed-envelope-wrapper').classList.add('hidden-state');
+      document.getElementById('opened-scene').classList.add('active');
+    }
+
+    function closeEnvelope() {
+      document.getElementById('opened-scene').classList.remove('active');
+      document.getElementById('closed-envelope-wrapper').classList.remove('hidden-state');
+      document.getElementById('rsvp-card-container').classList.remove('is-flipped');
+    }
+
+    /* ================= RENDER INVITATION FOR CURRENT GUEST ================= */
+    function renderCurrentInvitation() {
+      const guest = appState.guests.find(g => g.id === currentGuestId) || appState.guests[0];
+      if (!guest) return;
+      currentGuestId = guest.id;
+
+      const ev = appState.event;
+      document.getElementById('card-open-hint').textContent = ev.openHint;
+      document.getElementById('card-script-title').textContent = ev.scriptTitle;
+      document.getElementById('card-subtitle').textContent = ev.subtitle;
+      document.getElementById('card-event-title').textContent = ev.title;
+      document.getElementById('card-salutation-prefix').textContent = ev.salutationPrefix;
+
+      document.getElementById('card-label-date').textContent = ev.labelDate;
+      document.getElementById('card-event-date').textContent = ev.date;
+      document.getElementById('card-label-time').textContent = ev.labelTime;
+      document.getElementById('card-event-time').textContent = ev.time;
+      document.getElementById('card-label-venue').textContent = ev.labelVenue;
+      document.getElementById('card-event-venue').textContent = ev.venue;
+      document.getElementById('card-event-address').textContent = ev.address;
+      document.getElementById('card-closing-quote').textContent = ev.quote;
+
+      document.getElementById('card-rsvp-question').textContent = ev.rsvpQuestion;
+      document.getElementById('card-rsvp-yes-btn').textContent = ev.rsvpYesLabel;
+      document.getElementById('card-rsvp-no-btn').textContent = ev.rsvpNoLabel;
+
+      document.getElementById('card-guest-name').textContent = guest.name;
+      document.getElementById('card-guest-note').textContent = guest.note || '';
+      document.getElementById('card-guest-photo').src = guest.photo || processedAssets.defaultPortrait;
+
+      const statusEl = document.getElementById('rsvp-front-status');
+      if (guest.rsvp === 'yes') {
+        statusEl.textContent = '✓ Đã xác nhận: Sẽ tham dự';
+        statusEl.style.color = '#166534';
+      } else if (guest.rsvp === 'no') {
+        statusEl.textContent = '✕ Đã phản hồi: Không thể tham dự';
+        statusEl.style.color = '#991b1b';
+      } else {
+        statusEl.textContent = 'Vui lòng chọn xác nhận tham dự';
+        statusEl.style.color = 'var(--text-muted)';
+      }
+
+      document.getElementById('rsvp-message-input').value = guest.message || '';
+      document.getElementById('rsvp-card-container').classList.remove('is-flipped');
+    }
+
+    function chooseRsvp(choice) {
+      pendingRsvpChoice = choice;
+      const label = document.getElementById('rsvp-back-choice-label');
+      if (choice === 'yes') {
+        label.textContent = '✓ Xác nhận: Sẽ tham dự';
+        label.style.background = '#e1f5e8';
+        label.style.color = '#166534';
+      } else {
+        label.textContent = '✕ Phản hồi: Không tham dự';
+        label.style.background = '#fee2e2';
+        label.style.color = '#991b1b';
+      }
+      document.getElementById('rsvp-card-container').classList.add('is-flipped');
+    }
+
+    function flipRsvpBack() {
+      document.getElementById('rsvp-card-container').classList.remove('is-flipped');
+    }
+
+    async function submitRsvpResponse() {
+      const guest = appState.guests.find(g => g.id === currentGuestId);
+      if (!guest) return;
+      guest.rsvp = pendingRsvpChoice;
+      guest.message = document.getElementById('rsvp-message-input').value.trim();
+      await saveAppState(true);
+      renderCurrentInvitation();
+      renderAdminTable();
+      showToast(`Cảm ơn ${guest.name}! Đã gửi xác nhận & lời nhắn tới Ban Tổ Chức.`);
+    }
+
+    /* ================= ADMIN TABS & CONTROLS ================= */
+    function switchTab(tab) {
+      const adminView = document.getElementById('admin-view');
+      const btnPrev = document.getElementById('tab-preview-btn');
+      const btnAdmin = document.getElementById('tab-admin-btn');
+
+      if (tab === 'admin') {
+        adminView.classList.add('active');
+        btnAdmin.classList.remove('nav-btn-outline');
+        btnAdmin.classList.add('nav-btn-active');
+        btnPrev.classList.remove('nav-btn-active');
+        btnPrev.classList.add('nav-btn-outline');
+        populateEventInputs();
+        renderAdminTable();
+      } else {
+        adminView.classList.remove('active');
+        btnPrev.classList.remove('nav-btn-outline');
+        btnPrev.classList.add('nav-btn-active');
+        btnAdmin.classList.remove('nav-btn-active');
+        btnAdmin.classList.add('nav-btn-outline');
+        renderCurrentInvitation();
+        fitDesktopStageToViewport();
+      }
+    }
+
+    function populateEventInputs() {
+      const ev = appState.event;
+      document.getElementById('input-script-title').value = ev.scriptTitle;
+      document.getElementById('input-event-subtitle').value = ev.subtitle;
+      document.getElementById('input-event-title').value = ev.title;
+      document.getElementById('input-salutation-prefix').value = ev.salutationPrefix;
+      document.getElementById('input-open-hint').value = ev.openHint;
+      document.getElementById('input-event-quote').value = ev.quote;
+      document.getElementById('input-label-date').value = ev.labelDate;
+      document.getElementById('input-event-date').value = ev.date;
+      document.getElementById('input-label-time').value = ev.labelTime;
+      document.getElementById('input-event-time').value = ev.time;
+      document.getElementById('input-label-venue').value = ev.labelVenue;
+      document.getElementById('input-event-venue').value = ev.venue;
+      document.getElementById('input-event-address').value = ev.address;
+      document.getElementById('input-rsvp-question').value = ev.rsvpQuestion;
+      document.getElementById('input-rsvp-buttons').value = `${ev.rsvpYesLabel} | ${ev.rsvpNoLabel}`;
+    }
+
+    async function saveEventSettings() {
+      const ev = appState.event;
+      ev.scriptTitle = document.getElementById('input-script-title').value.trim();
+      ev.subtitle = document.getElementById('input-event-subtitle').value.trim();
+      ev.title = document.getElementById('input-event-title').value.trim();
+      ev.salutationPrefix = document.getElementById('input-salutation-prefix').value.trim();
+      ev.openHint = document.getElementById('input-open-hint').value.trim();
+      ev.quote = document.getElementById('input-event-quote').value.trim();
+      ev.labelDate = document.getElementById('input-label-date').value.trim();
+      ev.date = document.getElementById('input-event-date').value.trim();
+      ev.labelTime = document.getElementById('input-label-time').value.trim();
+      ev.time = document.getElementById('input-event-time').value.trim();
+      ev.labelVenue = document.getElementById('input-label-venue').value.trim();
+      ev.venue = document.getElementById('input-event-venue').value.trim();
+      ev.address = document.getElementById('input-event-address').value.trim();
+      ev.rsvpQuestion = document.getElementById('input-rsvp-question').value.trim();
+
+      const btnParts = document.getElementById('input-rsvp-buttons').value.split('|');
+      if (btnParts[0]) ev.rsvpYesLabel = btnParts[0].trim();
+      if (btnParts[1]) ev.rsvpNoLabel = btnParts[1].trim();
+
+      await saveAppState();
+      renderCurrentInvitation();
+      showToast('Đã lưu & đồng bộ toàn bộ nội dung thiệp lên Cloud!');
+    }
+
+    function syncGuestDropdown() {
+      const select = document.getElementById('preview-guest-select');
+      select.innerHTML = appState.guests.map(g =>
+        `<option value="${g.id}" ${g.id === currentGuestId ? 'selected' : ''}>${g.name}</option>`
+      ).join('');
+      document.getElementById('guest-count-badge').textContent = appState.guests.length;
+    }
+
+    function selectGuestFromDropdown(id) {
+      currentGuestId = id;
+      closeEnvelope();
+      renderCurrentInvitation();
+    }
+
+    function renderAdminTable() {
+      syncGuestDropdown();
+      const tbody = document.getElementById('guest-table-body');
+      tbody.innerHTML = appState.guests.map(guest => {
+        const photoSrc = guest.photo || processedAssets.defaultPortrait;
+        let statusHtml = `<span class="status-pill status-pending">⏳ Chưa xác nhận</span>`;
+        if (guest.rsvp === 'yes') statusHtml = `<span class="status-pill status-yes">✓ Sẽ tham dự</span>`;
+        if (guest.rsvp === 'no') statusHtml = `<span class="status-pill status-no">✕ Không tham dự</span>`;
+
+        return `
+          <tr>
+            <td><img src="${photoSrc}" class="thumb-portrait" alt="${guest.name}" /></td>
+            <td>
+              <div style="font-weight:700; color:var(--wine-dark); font-size:14px;">${guest.name}</div>
+              <div style="font-size:12px; color:var(--text-muted); margin-top:3px;">${guest.note || '—'}</div>
+            </td>
+            <td>${statusHtml}</td>
+            <td style="max-width:240px; font-style:italic; color:#4a2b2e;">
+              ${guest.message ? `"${guest.message}"` : '<span style="color:#9e888a;">Chưa có lời nhắn</span>'}
+            </td>
+            <td>
+              <div class="action-btns">
+                <button class="btn-sm" onclick="previewGuestCard('${guest.id}')">👁 Xem trước</button>
+                <button class="btn-sm" onclick="openGuestModal('${guest.id}')">✎ Sửa & Ảnh</button>
+                <button class="btn-sm" onclick="openShareModal('${guest.id}')">🔗 Chia sẻ link</button>
+                <button class="btn-sm btn-sm-danger" onclick="deleteGuest('${guest.id}')">🗑 Xóa</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function previewGuestCard(id) {
+      currentGuestId = id;
+      syncGuestDropdown();
+      switchTab('preview');
+      closeEnvelope();
+    }
+
+    /* ================= GUEST MODAL (ADD / EDIT) ================= */
+    function openGuestModal(id = '') {
+      const modal = document.getElementById('guest-modal');
+      document.getElementById('modal-guest-photo-file').value = '';
+      if (id) {
+        const guest = appState.guests.find(g => g.id === id);
+        document.getElementById('guest-modal-title').textContent = 'Chỉnh Sửa Thiệp Khách Mời';
+        document.getElementById('edit-guest-id').value = guest.id;
+        document.getElementById('modal-guest-name').value = guest.name;
+        document.getElementById('modal-guest-note').value = guest.note || '';
+        modalTempPhoto = guest.photo || '';
+        document.getElementById('modal-photo-preview').src = modalTempPhoto || processedAssets.defaultPortrait;
+      } else {
+        document.getElementById('guest-modal-title').textContent = 'Thêm Khách Mời Mới';
+        document.getElementById('edit-guest-id').value = '';
+        document.getElementById('modal-guest-name').value = '';
+        document.getElementById('modal-guest-note').value = 'Trân trọng kính mời Quý khách tới chung vui cùng chúng tôi!';
+        modalTempPhoto = '';
+        document.getElementById('modal-photo-preview').src = processedAssets.defaultPortrait;
+      }
+      modal.classList.add('open');
+    }
+
+    function closeGuestModal() {
+      document.getElementById('guest-modal').classList.remove('open');
+    }
+
+    async function previewModalPhoto(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      modalTempPhoto = await compressImageFile(file, 650);
+      document.getElementById('modal-photo-preview').src = modalTempPhoto;
+    }
+
+    async function saveGuestForm() {
+      const id = document.getElementById('edit-guest-id').value;
+      const name = document.getElementById('modal-guest-name').value.trim();
+      const note = document.getElementById('modal-guest-note').value.trim();
+
+      if (!name) {
+        showToast('Vui lòng nhập họ tên khách mời!');
+        return;
+      }
+
+      if (id) {
+        const guest = appState.guests.find(g => g.id === id);
+        if (guest) {
+          guest.name = name;
+          guest.note = note;
+          if (modalTempPhoto) guest.photo = modalTempPhoto;
+        }
+        showToast('Đã cập nhật & lưu thông tin khách mời lên Cloud!');
+      } else {
+        const newId = 'khach-' + String(Date.now()).slice(-5);
+        appState.guests.push({
+          id: newId,
+          name,
+          note,
+          photo: modalTempPhoto,
+          rsvp: 'pending',
+          message: ''
+        });
+        currentGuestId = newId;
+        showToast('Đã thêm khách mời mới & lưu lên Cloud!');
+      }
+
+      await saveAppState(true);
+      closeGuestModal();
+      renderAdminTable();
+      renderCurrentInvitation();
+    }
+
+    async function deleteGuest(id) {
+      if (appState.guests.length <= 1) {
+        showToast('Cần giữ lại ít nhất 1 khách mời trong danh sách!');
+        return;
+      }
+      appState.guests = appState.guests.filter(g => g.id !== id);
+      if (currentGuestId === id) currentGuestId = appState.guests[0].id;
+      await saveAppState(true);
+      renderAdminTable();
+      renderCurrentInvitation();
+      showToast('Đã xóa khách mời khỏi danh sách.');
+    }
+
+    /* ================= SHARE LINK ================= */
+    function openShareModal(id) {
+      const guest = appState.guests.find(g => g.id === id);
+      if (!guest) return;
+      const baseUrl = window.location.href.split('?')[0].split('#')[0];
+      const shareUrl = `${baseUrl}?guest=${encodeURIComponent(guest.id)}`;
+      document.getElementById('share-guest-name').textContent = guest.name;
+      document.getElementById('share-link-input').value = shareUrl;
+      document.getElementById('share-modal').classList.add('open');
+    }
+
+    function closeShareModal() {
+      document.getElementById('share-modal').classList.remove('open');
+    }
+
+    function copyShareLink() {
+      const input = document.getElementById('share-link-input');
+      input.select();
+      input.setSelectionRange(0, 99999);
+      navigator.clipboard?.writeText(input.value);
+      document.execCommand('copy');
+      showToast('Đã sao chép đường dẫn thiệp mời riêng!');
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      clearTimeout(window.__toastTimer);
+      window.__toastTimer = setTimeout(() => toast.classList.remove('show'), 3200);
+    }
+
+    /* ================= INIT & URL GUEST MODE CHECK ================= */
+    window.addEventListener('DOMContentLoaded', async () => {
+      const params = new URLSearchParams(window.location.search);
+      const guestParam = params.get('guest');
+
+      await resolveAllAssets();
+      await syncFromSupabase();
+
+      if (guestParam) {
+        document.body.classList.add('guest-mode');
+        const found = appState.guests.find(g => g.id === guestParam);
+        if (found) currentGuestId = found.id;
+      }
+
+      renderCurrentInvitation();
+      renderAdminTable();
+      fitDesktopStageToViewport();
+    });
+  </script>
+</body>
+</html>
