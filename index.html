@@ -41,6 +41,51 @@
       -webkit-font-smoothing: antialiased;
     }
 
+    /* ================= LUXURY LOADING SPINNER OVERLAY ================= */
+    #page-loader {
+      position: fixed;
+      inset: 0;
+      background-color: var(--cream-bg);
+      background-image:
+        radial-gradient(circle at 50% 45%, rgba(201, 158, 72, 0.16) 0%, transparent 55%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      z-index: 5000;
+      transition: opacity 0.45s ease, visibility 0.45s ease;
+    }
+
+    #page-loader.fade-out {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .gold-spinner {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 3px solid rgba(201, 158, 72, 0.22);
+      border-top-color: var(--wine-main);
+      border-right-color: var(--gold-main);
+      animation: spinGold 0.85s linear infinite;
+    }
+
+    @keyframes spinGold {
+      to { transform: rotate(360deg); }
+    }
+
+    .loader-caption {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--wine-main);
+      letter-spacing: 0.04em;
+    }
+
     /* ================= TOP ADMIN BAR ================= */
     #admin-navbar {
       position: fixed;
@@ -336,19 +381,20 @@
       filter: drop-shadow(0 6px 16px rgba(40, 10, 15, 0.14));
     }
 
+    /* Lowered top padding (top: 72px) so the top 3 lines sit comfortably below the top lace border */
     .letter-safe-content {
       position: absolute;
-      top: 62px;
-      left: 40px;
-      right: 40px;
-      height: 365px;
+      top: 72px;
+      left: 38px;
+      right: 38px;
+      height: 360px;
       z-index: 2;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: space-between;
       text-align: center;
-      overflow: hidden;
+      overflow: visible;
     }
 
     .env-front-pocket {
@@ -361,14 +407,19 @@
       pointer-events: none;
     }
 
-    .letter-header-group { width: 100%; }
+    .letter-header-group {
+      width: 100%;
+      padding-top: 2px;
+    }
 
+    /* Extra top & side breathing room so script flourishes of "M" never clip */
     .letter-script-title {
       font-family: 'Great Vibes', cursive;
-      font-size: 36px;
-      line-height: 1.05;
+      font-size: 35px;
+      line-height: 1.25;
+      padding: 4px 6px 0 6px;
       color: var(--wine-main);
-      margin-bottom: 2px;
+      margin-bottom: 1px;
       white-space: nowrap;
     }
 
@@ -383,7 +434,7 @@
 
     .letter-event-name {
       font-family: 'Playfair Display', serif;
-      font-size: 18.5px;
+      font-size: 18px;
       font-weight: 700;
       letter-spacing: 0.08em;
       color: var(--wine-dark);
@@ -445,7 +496,7 @@
     .event-meta-stack {
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 3px;
       width: 100%;
     }
 
@@ -725,7 +776,6 @@
       gap: 22px;
     }
 
-    /* Summary Stats & Live Activity Strip */
     .stats-strip {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -958,8 +1008,8 @@
       .env-back-layer { left: -7px; width: 354px; height: 310px; }
       .env-front-pocket { width: 340px; }
       .lace-letter-sheet { left: 17px; bottom: 18px; width: 306px; height: 425px; }
-      .letter-safe-content { top: 44px; left: 24px; right: 24px; height: 265px; }
-      .letter-script-title { font-size: 25px; }
+      .letter-safe-content { top: 50px; left: 24px; right: 24px; height: 260px; }
+      .letter-script-title { font-size: 24px; }
       .letter-event-name { font-size: 13.5px; }
       .guest-salutation-name { font-size: 13px; }
       .meta-row-value { font-size: 11.5px; }
@@ -970,6 +1020,12 @@
   </style>
 </head>
 <body>
+
+  <!-- LUXURY SPINNER OVERLAY (PREVENTS BROKEN IMAGE FLASH) -->
+  <div id="page-loader">
+    <div class="gold-spinner"></div>
+    <div class="loader-caption">Đang chuẩn bị thiệp mời...</div>
+  </div>
 
   <!-- TOP ADMIN NAVIGATION -->
   <header id="admin-navbar">
@@ -1002,7 +1058,7 @@
       <!-- 1. CLOSED ENVELOPE -->
       <div id="closed-envelope-wrapper" onclick="openEnvelope()">
         <div class="closed-envelope-box">
-          <img id="img-closed-env" class="closed-envelope-img" alt="Phong bì đóng" />
+          <img id="img-closed-env" class="closed-envelope-img" alt="" />
           <div class="wax-pulse-ring"></div>
         </div>
         <div class="open-hint-pill" id="card-open-hint">✦ Chạm vào dấu sáp để mở thiệp mời ✦</div>
@@ -1012,10 +1068,10 @@
       <div id="opened-scene">
         <!-- Left: 3-Layer Envelope + Rising Lace Card -->
         <div class="envelope-assembly">
-          <img id="img-open-env-back" class="env-back-layer" alt="Mặt sau phong bì mở" />
+          <img id="img-open-env-back" class="env-back-layer" alt="" />
 
           <div class="lace-letter-sheet">
-            <img id="img-lace-border" class="lace-bg-img" alt="Khung viền ren" />
+            <img id="img-lace-border" class="lace-bg-img" alt="" />
 
             <div class="letter-safe-content">
               <div class="letter-header-group">
@@ -1064,13 +1120,13 @@
             </div>
           </div>
 
-          <img id="img-open-env-front" class="env-front-pocket" alt="Mặt trước túi phong bì" />
+          <img id="img-open-env-front" class="env-front-pocket" alt="" />
         </div>
 
         <!-- Top Right: Extracted Personalized Portrait -->
         <div class="photo-extract-card">
           <div class="photo-inner-frame">
-            <img id="card-guest-photo" alt="Ảnh cá nhân hóa" />
+            <img id="card-guest-photo" alt="" />
           </div>
         </div>
 
@@ -1280,7 +1336,7 @@
         <button class="btn-sm" onclick="closeShareModal()">✕</button>
       </div>
       <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.5;">
-        Gửi đường dẫn bên dưới cho <strong id="share-guest-name" style="color: var(--wine-dark);"></strong>. Khi mở link này, giao diện quản lý sẽ ẩn hoàn toàn, khách chỉ xem được thiệp cá nhân của mình và xác nhận tham dự.
+        Gửi đường dẫn bên dưới cho <strong id="share-guest-name" style="color: var(--wine-dark);"></strong>. Khi mở link này trên Vercel, giao diện quản lý sẽ ẩn hoàn toàn, khách chỉ xem được thiệp cá nhân của mình và xác nhận tham dự.
       </p>
       <div style="display: flex; gap: 8px;">
         <input id="share-link-input" class="form-control" type="text" readonly style="flex:1; background:#f8f2e6;" />
@@ -1302,7 +1358,7 @@
     const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     /* ================= STORAGE & DEFAULT STATE ================= */
-    const LOCAL_STORAGE_KEY = 'yep2026_cloud_backup_v3';
+    const LOCAL_STORAGE_KEY = 'yep2026_cloud_backup_v4';
 
     const DEFAULT_STATE = {
       event: {
@@ -1359,12 +1415,7 @@
 
     function formatVietnamDateTime(dateObj = new Date()) {
       const pad = (n) => String(n).padStart(2, '0');
-      const hh = pad(dateObj.getHours());
-      const mm = pad(dateObj.getMinutes());
-      const dd = pad(dateObj.getDate());
-      const mo = pad(dateObj.getMonth() + 1);
-      const yyyy = dateObj.getFullYear();
-      return `${hh}:${mm} - ${dd}/${mo}/${yyyy}`;
+      return `${pad(dateObj.getHours())}:${pad(dateObj.getMinutes())} - ${pad(dateObj.getDate())}/${pad(dateObj.getMonth() + 1)}/${dateObj.getFullYear()}`;
     }
 
     function loadLocalBackup() {
@@ -1427,7 +1478,7 @@
         updateCloudBadge('● Đã đồng bộ Supabase Cloud', true);
       } catch (err) {
         console.error('Supabase sync error:', err);
-        updateCloudBadge('● Lỗi kết nối Supabase (Chạy lệnh SQL Bước 1)', false);
+        updateCloudBadge('● Lỗi kết nối Supabase (Chạy lệnh SQL)', false);
       }
     }
 
@@ -1457,8 +1508,8 @@
         updateCloudBadge('● Đã lưu lên Supabase Cloud', true);
       } catch (err) {
         console.error('Supabase save error:', err);
-        updateCloudBadge('● Lỗi lưu Cloud (Chạy lệnh SQL Bước 1)', false);
-        if (!silent) showToast('Lỗi lưu Supabase! Hãy chạy đoạn lệnh SQL ở Bước 1.');
+        updateCloudBadge('● Lỗi lưu Cloud', false);
+        if (!silent) showToast('Lỗi lưu Supabase! Hãy kiểm tra lại quyền SQL.');
       }
     }
 
@@ -1571,15 +1622,11 @@
       const nfc = (s) => encodeURI(s.normalize('NFC'));
       const nfd = (s) => encodeURI(s.normalize('NFD'));
 
-      processedAssets.closedEnv = await tryLoadFirstAvailable([
-        nfc('./Ảnh ChatGPT 16_16_04 24 thg 11, 2026.png'),
-        nfd('./Ảnh ChatGPT 16_16_04 24 thg 11, 2026.png')
-      ], 'remove-outer-white');
-      if (processedAssets.closedEnv) {
-        document.getElementById('img-closed-env').src = processedAssets.closedEnv;
-      }
-
-      const [openBack, openFront, lace, portrait] = await Promise.all([
+      const [closed, openBack, openFront, lace, portrait] = await Promise.all([
+        tryLoadFirstAvailable([
+          nfc('./Ảnh ChatGPT 16_16_04 24 thg 11, 2026.png'),
+          nfd('./Ảnh ChatGPT 16_16_04 24 thg 11, 2026.png')
+        ], 'remove-outer-white'),
         tryLoadFirstAvailable([
           nfc('./Phong bì nhung đỏ mở nắp_2.webp'),
           nfd('./Phong bì nhung đỏ mở nắp_2.webp'),
@@ -1602,14 +1649,16 @@
         ], 'none')
       ]);
 
+      processedAssets.closedEnv = closed;
       processedAssets.openEnvBack = openBack;
       processedAssets.openEnvFront = openFront;
       processedAssets.laceFrame = lace;
       processedAssets.defaultPortrait = portrait;
 
-      document.getElementById('img-open-env-back').src = processedAssets.openEnvBack;
-      document.getElementById('img-open-env-front').src = processedAssets.openEnvFront;
-      document.getElementById('img-lace-border').src = processedAssets.laceFrame;
+      if (closed) document.getElementById('img-closed-env').src = closed;
+      if (openBack) document.getElementById('img-open-env-back').src = openBack;
+      if (openFront) document.getElementById('img-open-env-front').src = openFront;
+      if (lace) document.getElementById('img-lace-border').src = lace;
     }
 
     /* ================= AUTO-FIT STAGE TO VIEWPORT ================= */
@@ -1716,7 +1765,6 @@
       const msgText = document.getElementById('rsvp-message-input').value.trim();
       const timestamp = formatVietnamDateTime(new Date());
 
-      // Fetch latest cloud state first so concurrent guest responses never overwrite each other
       await syncFromSupabase(false);
 
       const guest = appState.guests.find(g => g.id === targetId);
@@ -1842,7 +1890,7 @@
 
         return `
           <tr>
-            <td><img src="${photoSrc}" class="thumb-portrait" alt="${guest.name}" /></td>
+            <td><img src="${photoSrc}" class="thumb-portrait" alt="" /></td>
             <td>
               <div style="font-weight:700; color:var(--wine-dark); font-size:14px;">${guest.name}</div>
               <div style="font-size:12px; color:var(--text-muted); margin-top:3px;">${guest.note || '—'}</div>
@@ -2052,6 +2100,10 @@
       renderCurrentInvitation();
       renderAdminTable();
       setupSupabaseRealtime(isGuestMode);
+
+      // Hide luxury loader only after envelope & cloud data are 100% ready
+      const loader = document.getElementById('page-loader');
+      if (loader) loader.classList.add('fade-out');
     });
   </script>
 </body>
