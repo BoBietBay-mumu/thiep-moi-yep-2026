@@ -1513,7 +1513,37 @@
       }
     }
 
-    /* ================= FAST IMAGE COMPRESSION & PARALLEL TRANSPARENCY ================= */
+    /* ================= ULTRA-FAST CACHED ASSETS & INSTANT BOOT ================= */
+    const ASSET_CACHE_DB = 'yep2026_asset_cache_v1';
+
+    function openAssetDB() {
+      return new Promise((resolve) => {
+        if (!window.indexedDB) return resolve(null);
+        const req = indexedDB.open(ASSET_CACHE_DB, 1);
+        req.onupgradeneeded = () => req.result.createObjectStore('assets');
+        req.onsuccess = () => resolve(req.result);
+        req.onerror = () => resolve(null);
+      });
+    }
+
+    async function getCachedAsset(key) {
+      const db = await openAssetDB();
+      if (!db) return '';
+      return new Promise((resolve) => {
+        const tx = db.transaction('assets', 'readonly');
+        const req = tx.objectStore('assets').get(key);
+        req.onsuccess = () => resolve(req.result || '');
+        req.onerror = () => resolve('');
+      });
+    }
+
+    async function setCachedAsset(key, val) {
+      const db = await openAssetDB();
+      if (!db || !val) return;
+      const tx = db.transaction('assets', 'readwrite');
+      tx.objectStore('assets').put(val, key);
+    }
+
     function compressImageFile(file, maxWidth = 650) {
       return new Promise((resolve) => {
         const reader = new FileReader();
@@ -1526,7 +1556,7 @@
             canvas.height = Math.round(img.height * scale);
             const ctx = canvas.getContext('2d');
             ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-            resolve(canvas.toDataURL('image/jpeg', 0.82));
+            resolve(canvas.toDataURL('image/webp', 0.82));
           };
           img.src = e.target.result;
         };
@@ -1543,7 +1573,7 @@
           try {
             if (mode === 'none') return resolve(src);
 
-            const maxDim = 900;
+            const maxDim = 720;
             const scale = Math.min(1, maxDim / Math.max(img.naturalWidth, img.naturalHeight));
             const w = Math.round(img.naturalWidth * scale);
             const h = Math.round(img.naturalHeight * scale);
@@ -1599,7 +1629,7 @@
             }
 
             ctx.putImageData(imgData, 0, 0);
-            resolve(canvas.toDataURL('image/png'));
+            resolve(canvas.toDataURL('image/webp', 0.88));
           } catch (err) {
             resolve(src);
           }
@@ -1609,56 +1639,72 @@
       });
     }
 
-    async function tryLoadFirstAvailable(candidates, mode) {
+    async function loadAndCacheAsset(cacheKey, candidates, mode) {
+      const cached = await getCachedAsset(cacheKey);
+      if (cached) return cached;
+
       for (const path of candidates) {
         if (!path) continue;
         const res = await processImageTransparency(path, mode);
-        if (res) return res;
+        if (res) {
+          if (mode !== 'none') setCachedAsset(cacheKey, res);
+          return res;
+        }
       }
       return '';
     }
 
-    async function resolveAllAssets() {
+    async function resolvePrimaryEnvelope() {
       const nfc = (s) => encodeURI(s.normalize('NFC'));
       const nfd = (s) => encodeURI(s.normalize('NFD'));
 
-      const [closed, openBack, openFront, lace, portrait] = await Promise.all([
-        tryLoadFirstAvailable([
-          nfc('./Ảnh ChatGPT 16_16_04 24 thg 11, 2026.png'),
-          nfd('./Ảnh ChatGPT 16_16_04 24 thg 11, 2026.png')
-        ], 'remove-outer-white'),
-        tryLoadFirstAvailable([
+      const closed = await loadAndCacheAsset('closedEnv', [
+        nfc('./Ảnh ChatGPT 16_16_04 24 thg 11, 2026.png'),
+        nfd('./Ảnh ChatGPT 16_16_04 24 thg 11, 2026.png')
+      ], 'remove-outer-white');
+
+      processedAssets.closedEnv = closed;
+      if (closed) document.getElementById('img-closed-env').src = closed;
+    }
+
+    async function resolveInnerAssetsInBackground() {
+      const nfc = (s) => encodeURI(s.normalize('NFC'));
+      const nfd = (s) => encodeURI(s.normalize('NFD'));
+
+      const [openBack, openFront, lace, portrait] = await Promise.all([
+        loadAndCacheAsset('openEnvBack', [
           nfc('./Phong bì nhung đỏ mở nắp_2.webp'),
           nfd('./Phong bì nhung đỏ mở nắp_2.webp'),
           nfc('./Phong bì nhung đỏ mở nắp.webp'),
           nfd('./Phong bì nhung đỏ mở nắp.webp')
         ], 'remove-outer-white'),
-        tryLoadFirstAvailable([
+        loadAndCacheAsset('openEnvFront', [
           nfc('./Phong bì nhung đỏ đô niêm sáp vàng.webp'),
           nfd('./Phong bì nhung đỏ đô niêm sáp vàng.webp')
         ], 'none'),
-        tryLoadFirstAvailable([
+        loadAndCacheAsset('laceFrame', [
           nfc('./Ảnh ChatGPT 16_16_15 24 thg 11, 2026_2.jpg'),
           nfd('./Ảnh ChatGPT 16_16_15 24 thg 11, 2026_2.jpg'),
           nfc('./Ảnh ChatGPT 16_16_15 24 thg 11, 2026.png'),
           nfd('./Ảnh ChatGPT 16_16_15 24 thg 11, 2026.png')
         ], 'remove-black'),
-        tryLoadFirstAvailable([
+        loadAndCacheAsset('defaultPortrait', [
           nfc('./Ảnh ChatGPT 16_16_10 24 thg 11, 2026.png'),
           nfd('./Ảnh ChatGPT 16_16_10 24 thg 11, 2026.png')
         ], 'none')
       ]);
 
-      processedAssets.closedEnv = closed;
       processedAssets.openEnvBack = openBack;
       processedAssets.openEnvFront = openFront;
       processedAssets.laceFrame = lace;
       processedAssets.defaultPortrait = portrait;
 
-      if (closed) document.getElementById('img-closed-env').src = closed;
       if (openBack) document.getElementById('img-open-env-back').src = openBack;
       if (openFront) document.getElementById('img-open-env-front').src = openFront;
       if (lace) document.getElementById('img-lace-border').src = lace;
+
+      renderCurrentInvitation();
+      renderAdminTable();
     }
 
     /* ================= AUTO-FIT STAGE TO VIEWPORT ================= */
@@ -2040,7 +2086,7 @@
       window.__toastTimer = setTimeout(() => toast.classList.remove('show'), 3800);
     }
 
-    /* ================= REALTIME SUBSCRIPTION & INIT ================= */
+    /* ================= REALTIME SUBSCRIPTION & INSTANT BOOT ================= */
     function setupSupabaseRealtime(isGuestMode) {
       supabaseClient
         .channel('invitation-live-sync')
@@ -2083,28 +2129,33 @@
 
       if (isGuestMode) {
         document.body.classList.add('guest-mode');
+        const foundLocal = appState.guests.find(g => g.id === guestParam);
+        if (foundLocal) currentGuestId = foundLocal.id;
       }
 
       fitDesktopStageToViewport();
+      renderCurrentInvitation();
 
-      await Promise.all([
-        resolveAllAssets(),
-        syncFromSupabase(false)
-      ]);
+      // Load ONLY the closed envelope first so spinner disappears immediately
+      await resolvePrimaryEnvelope();
+      const loader = document.getElementById('page-loader');
+      if (loader) loader.classList.add('fade-out');
+
+      // Load inner card layers & sync Supabase in the background without blocking UI
+      resolveInnerAssetsInBackground();
+      await syncFromSupabase(false);
 
       if (guestParam) {
-        const found = appState.guests.find(g => g.id === guestParam);
-        if (found) currentGuestId = found.id;
+        const foundCloud = appState.guests.find(g => g.id === guestParam);
+        if (foundCloud) currentGuestId = foundCloud.id;
       }
 
       renderCurrentInvitation();
       renderAdminTable();
       setupSupabaseRealtime(isGuestMode);
-
-      // Hide luxury loader only after envelope & cloud data are 100% ready
-      const loader = document.getElementById('page-loader');
-      if (loader) loader.classList.add('fade-out');
     });
   </script>
+</body>
+</html>
 </body>
 </html>
