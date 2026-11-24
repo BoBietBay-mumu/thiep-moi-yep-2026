@@ -294,7 +294,6 @@
       height: 650px;
     }
 
-    /* Perfectly aligned back layer */
     .env-back-layer {
       position: absolute;
       left: -10px;
@@ -307,7 +306,6 @@
       filter: drop-shadow(0 20px 30px rgba(45, 7, 13, 0.25));
     }
 
-    /* Lace Invitation Card */
     .lace-letter-sheet {
       position: absolute;
       left: 25px;
@@ -363,7 +361,6 @@
       pointer-events: none;
     }
 
-    /* Typography locked inside safe-zone */
     .letter-header-group { width: 100%; }
 
     .letter-script-title {
@@ -635,7 +632,7 @@
 
     .rsvp-status-pill {
       text-align: center;
-      font-size: 11px;
+      font-size: 10.5px;
       color: var(--text-muted);
     }
 
@@ -728,6 +725,37 @@
       gap: 22px;
     }
 
+    /* Summary Stats & Live Activity Strip */
+    .stats-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .stat-box {
+      background: #fffcf6;
+      border: 1px solid rgba(201, 158, 72, 0.55);
+      border-radius: 14px;
+      padding: 14px 18px;
+      box-shadow: 0 4px 14px rgba(55, 10, 16, 0.04);
+    }
+
+    .stat-box .stat-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+    }
+
+    .stat-box .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--wine-dark);
+      margin-top: 2px;
+    }
+
     .admin-card {
       background: #fffcf6;
       border: 1px solid rgba(201, 158, 72, 0.55);
@@ -795,6 +823,17 @@
       cursor: pointer;
     }
 
+    .btn-secondary-gold {
+      padding: 8px 15px;
+      border-radius: 999px;
+      border: 1px solid var(--gold-main);
+      background: #f9efd9;
+      color: var(--wine-dark);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
     .table-wrap { overflow-x: auto; }
     table { width: 100%; border-collapse: collapse; font-size: 13px; }
     th {
@@ -831,6 +870,13 @@
     .status-yes { background: #e1f5e8; color: #166534; }
     .status-no { background: #fee2e2; color: #991b1b; }
     .status-pending { background: #fef3c7; color: #92400e; }
+
+    .rsvp-time-text {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 4px;
+      display: block;
+    }
 
     .action-btns { display: flex; flex-wrap: wrap; gap: 6px; }
     .btn-sm {
@@ -888,11 +934,11 @@
       background: var(--wine-dark);
       color: var(--gold-light);
       border: 1px solid var(--gold-main);
-      padding: 11px 18px;
-      border-radius: 10px;
-      font-size: 12.5px;
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-size: 13px;
       font-weight: 500;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
       z-index: 3000;
       opacity: 0;
       transform: translateY(15px);
@@ -919,7 +965,7 @@
       .meta-row-value { font-size: 11.5px; }
       .photo-extract-card, .rsvp-flip-container { position: relative; left: auto; top: auto; transform: none !important; opacity: 1 !important; }
       #btn-reclose { position: relative; left: auto; bottom: auto; margin-top: 10px; }
-      .admin-grid-3 { grid-template-columns: 1fr; }
+      .admin-grid-3, .stats-strip { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -1061,6 +1107,26 @@
   <section id="admin-view">
     <div class="admin-container">
 
+      <!-- Real-time RSVP Statistics Bar -->
+      <div class="stats-strip">
+        <div class="stat-box">
+          <div class="stat-label">Tổng số khách mời</div>
+          <div class="stat-num" id="stat-total">0</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label" style="color:#166534;">✓ Đồng ý tham dự</div>
+          <div class="stat-num" id="stat-yes" style="color:#166534;">0</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label" style="color:#991b1b;">✕ Không thể tham dự</div>
+          <div class="stat-num" id="stat-no" style="color:#991b1b;">0</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label" style="color:#92400e;">⏳ Chưa phản hồi</div>
+          <div class="stat-num" id="stat-pending" style="color:#92400e;">0</div>
+        </div>
+      </div>
+
       <!-- 1. Full Text & Event Editor -->
       <div class="admin-card">
         <div class="admin-card-header">
@@ -1147,10 +1213,13 @@
           <div>
             <h2>2. Danh Sách Thiệp Mời Cá Nhân Hóa & Phản Hồi Từ Khách</h2>
             <p style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">
-              Mỗi khách mời có tên, lời nhắn riêng, ảnh chân dung tỷ lệ dọc (9:16) và đường dẫn chia sẻ độc lập.
+              Tự động cập nhật trạng thái, giờ/ngày khách xác nhận và lời nhắn gửi về theo thời gian thực.
             </p>
           </div>
-          <button class="btn-primary-wine" onclick="openGuestModal()">+ Thêm Khách Mời Mới</button>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <button class="btn-secondary-gold" onclick="manualRefreshCloud()">↻ Cập nhật phản hồi mới</button>
+            <button class="btn-primary-wine" onclick="openGuestModal()">+ Thêm Khách Mời Mới</button>
+          </div>
         </div>
 
         <div class="table-wrap">
@@ -1159,7 +1228,7 @@
               <tr>
                 <th>Ảnh Cá Nhân</th>
                 <th>Tên Khách Mời & Lời Nhắn Riêng</th>
-                <th>Trạng Thái Xác Nhận</th>
+                <th>Trạng Thái & Thời Gian Xác Nhận</th>
                 <th>Lời Nhắn Khách Gửi Về</th>
                 <th>Thao Tác & Chia Sẻ Link</th>
               </tr>
@@ -1211,7 +1280,7 @@
         <button class="btn-sm" onclick="closeShareModal()">✕</button>
       </div>
       <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.5;">
-        Gửi đường dẫn bên dưới cho <strong id="share-guest-name" style="color: var(--wine-dark);"></strong>. Khi mở link này trên Vercel, giao diện quản lý sẽ ẩn hoàn toàn, khách chỉ xem được thiệp cá nhân của mình và xác nhận tham dự.
+        Gửi đường dẫn bên dưới cho <strong id="share-guest-name" style="color: var(--wine-dark);"></strong>. Khi mở link này, giao diện quản lý sẽ ẩn hoàn toàn, khách chỉ xem được thiệp cá nhân của mình và xác nhận tham dự.
       </p>
       <div style="display: flex; gap: 8px;">
         <input id="share-link-input" class="form-control" type="text" readonly style="flex:1; background:#f8f2e6;" />
@@ -1233,7 +1302,7 @@
     const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     /* ================= STORAGE & DEFAULT STATE ================= */
-    const LOCAL_STORAGE_KEY = 'yep2026_cloud_backup_v2';
+    const LOCAL_STORAGE_KEY = 'yep2026_cloud_backup_v3';
 
     const DEFAULT_STATE = {
       event: {
@@ -1261,6 +1330,7 @@
           note: 'Trân trọng kính mời anh cùng chung vui khoảnh khắc tổng kết cuối năm!',
           photo: '',
           rsvp: 'pending',
+          rsvpAt: '',
           message: ''
         },
         {
@@ -1269,6 +1339,7 @@
           note: 'Sự hiện diện của chị là niềm vinh hạnh lớn của Ban Tổ Chức!',
           photo: '',
           rsvp: 'yes',
+          rsvpAt: '18:20 - 24/11/2026',
           message: 'Chị sẽ có mặt đúng giờ, hẹn gặp mọi người!'
         }
       ]
@@ -1285,6 +1356,16 @@
     let currentGuestId = appState.guests[0]?.id || 'khach-01';
     let pendingRsvpChoice = 'yes';
     let modalTempPhoto = '';
+
+    function formatVietnamDateTime(dateObj = new Date()) {
+      const pad = (n) => String(n).padStart(2, '0');
+      const hh = pad(dateObj.getHours());
+      const mm = pad(dateObj.getMinutes());
+      const dd = pad(dateObj.getDate());
+      const mo = pad(dateObj.getMonth() + 1);
+      const yyyy = dateObj.getFullYear();
+      return `${hh}:${mm} - ${dd}/${mo}/${yyyy}`;
+    }
 
     function loadLocalBackup() {
       try {
@@ -1308,9 +1389,9 @@
       badge.style.borderColor = ok ? 'rgba(167, 243, 208, 0.4)' : 'rgba(253, 230, 138, 0.45)';
     }
 
-    async function syncFromSupabase() {
+    async function syncFromSupabase(notifyDiff = false) {
       try {
-        updateCloudBadge('↻ Đang tải từ Supabase...', true);
+        updateCloudBadge('↻ Đang đồng bộ Supabase...', true);
         const { data, error } = await supabaseClient
           .from('invitation_store')
           .select('payload')
@@ -1320,11 +1401,24 @@
         if (error) throw error;
 
         if (data && data.payload) {
+          const oldGuestsMap = new Map(appState.guests.map(g => [g.id, g]));
+          const newGuests = Array.isArray(data.payload.guests) && data.payload.guests.length
+            ? data.payload.guests
+            : appState.guests;
+
+          if (notifyDiff) {
+            newGuests.forEach(ng => {
+              const og = oldGuestsMap.get(ng.id);
+              if (og && (og.rsvp !== ng.rsvp || og.rsvpAt !== ng.rsvpAt) && ng.rsvp !== 'pending') {
+                const actionText = ng.rsvp === 'yes' ? 'ĐỒNG Ý THAM DỰ' : 'TỪ CHỐI THAM DỰ';
+                showToast(`🔔 ${ng.name} vừa xác nhận ${actionText} lúc ${ng.rsvpAt || 'vừa xong'}!`);
+              }
+            });
+          }
+
           appState = {
             event: { ...DEFAULT_STATE.event, ...(data.payload.event || {}) },
-            guests: Array.isArray(data.payload.guests) && data.payload.guests.length
-              ? data.payload.guests
-              : appState.guests
+            guests: newGuests
           };
           localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(appState));
         } else {
@@ -1332,9 +1426,16 @@
         }
         updateCloudBadge('● Đã đồng bộ Supabase Cloud', true);
       } catch (err) {
-        console.error(err);
-        updateCloudBadge('● Lỗi kết nối Supabase (Kiểm tra bảng SQL)', false);
+        console.error('Supabase sync error:', err);
+        updateCloudBadge('● Lỗi kết nối Supabase (Chạy lệnh SQL Bước 1)', false);
       }
+    }
+
+    async function manualRefreshCloud() {
+      await syncFromSupabase(true);
+      renderCurrentInvitation();
+      renderAdminTable();
+      showToast('Đã cập nhật dữ liệu mới nhất từ Supabase!');
     }
 
     async function saveAppState(silent = false) {
@@ -1355,13 +1456,13 @@
         if (error) throw error;
         updateCloudBadge('● Đã lưu lên Supabase Cloud', true);
       } catch (err) {
-        console.error(err);
-        updateCloudBadge('● Lỗi lưu Cloud', false);
-        if (!silent) showToast('Lỗi lưu Supabase! Hãy chắc chắn bạn đã chạy lệnh SQL tạo bảng invitation_store.');
+        console.error('Supabase save error:', err);
+        updateCloudBadge('● Lỗi lưu Cloud (Chạy lệnh SQL Bước 1)', false);
+        if (!silent) showToast('Lỗi lưu Supabase! Hãy chạy đoạn lệnh SQL ở Bước 1.');
       }
     }
 
-    /* ================= IMAGE COMPRESSION & TRANSPARENCY PROCESSING ================= */
+    /* ================= FAST IMAGE COMPRESSION & PARALLEL TRANSPARENCY ================= */
     function compressImageFile(file, maxWidth = 650) {
       return new Promise((resolve) => {
         const reader = new FileReader();
@@ -1390,13 +1491,17 @@
         img.onload = () => {
           try {
             if (mode === 'none') return resolve(src);
+
+            const maxDim = 900;
+            const scale = Math.min(1, maxDim / Math.max(img.naturalWidth, img.naturalHeight));
+            const w = Math.round(img.naturalWidth * scale);
+            const h = Math.round(img.naturalHeight * scale);
+
             const canvas = document.createElement('canvas');
-            const w = img.naturalWidth;
-            const h = img.naturalHeight;
             canvas.width = w;
             canvas.height = h;
             const ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0);
+            ctx.drawImage(img, 0, 0, w, h);
             const imgData = ctx.getImageData(0, 0, w, h);
             const data = imgData.data;
 
@@ -1470,32 +1575,38 @@
         nfc('./Ảnh ChatGPT 16_16_04 24 thg 11, 2026.png'),
         nfd('./Ảnh ChatGPT 16_16_04 24 thg 11, 2026.png')
       ], 'remove-outer-white');
+      if (processedAssets.closedEnv) {
+        document.getElementById('img-closed-env').src = processedAssets.closedEnv;
+      }
 
-      processedAssets.openEnvBack = await tryLoadFirstAvailable([
-        nfc('./Phong bì nhung đỏ mở nắp_2.webp'),
-        nfd('./Phong bì nhung đỏ mở nắp_2.webp'),
-        nfc('./Phong bì nhung đỏ mở nắp.webp'),
-        nfd('./Phong bì nhung đỏ mở nắp.webp')
-      ], 'remove-outer-white');
+      const [openBack, openFront, lace, portrait] = await Promise.all([
+        tryLoadFirstAvailable([
+          nfc('./Phong bì nhung đỏ mở nắp_2.webp'),
+          nfd('./Phong bì nhung đỏ mở nắp_2.webp'),
+          nfc('./Phong bì nhung đỏ mở nắp.webp'),
+          nfd('./Phong bì nhung đỏ mở nắp.webp')
+        ], 'remove-outer-white'),
+        tryLoadFirstAvailable([
+          nfc('./Phong bì nhung đỏ đô niêm sáp vàng.webp'),
+          nfd('./Phong bì nhung đỏ đô niêm sáp vàng.webp')
+        ], 'none'),
+        tryLoadFirstAvailable([
+          nfc('./Ảnh ChatGPT 16_16_15 24 thg 11, 2026_2.jpg'),
+          nfd('./Ảnh ChatGPT 16_16_15 24 thg 11, 2026_2.jpg'),
+          nfc('./Ảnh ChatGPT 16_16_15 24 thg 11, 2026.png'),
+          nfd('./Ảnh ChatGPT 16_16_15 24 thg 11, 2026.png')
+        ], 'remove-black'),
+        tryLoadFirstAvailable([
+          nfc('./Ảnh ChatGPT 16_16_10 24 thg 11, 2026.png'),
+          nfd('./Ảnh ChatGPT 16_16_10 24 thg 11, 2026.png')
+        ], 'none')
+      ]);
 
-      processedAssets.openEnvFront = await tryLoadFirstAvailable([
-        nfc('./Phong bì nhung đỏ đô niêm sáp vàng.webp'),
-        nfd('./Phong bì nhung đỏ đô niêm sáp vàng.webp')
-      ], 'none');
+      processedAssets.openEnvBack = openBack;
+      processedAssets.openEnvFront = openFront;
+      processedAssets.laceFrame = lace;
+      processedAssets.defaultPortrait = portrait;
 
-      processedAssets.laceFrame = await tryLoadFirstAvailable([
-        nfc('./Ảnh ChatGPT 16_16_15 24 thg 11, 2026_2.jpg'),
-        nfd('./Ảnh ChatGPT 16_16_15 24 thg 11, 2026_2.jpg'),
-        nfc('./Ảnh ChatGPT 16_16_15 24 thg 11, 2026.png'),
-        nfd('./Ảnh ChatGPT 16_16_15 24 thg 11, 2026.png')
-      ], 'remove-black');
-
-      processedAssets.defaultPortrait = await tryLoadFirstAvailable([
-        nfc('./Ảnh ChatGPT 16_16_10 24 thg 11, 2026.png'),
-        nfd('./Ảnh ChatGPT 16_16_10 24 thg 11, 2026.png')
-      ], 'none');
-
-      document.getElementById('img-closed-env').src = processedAssets.closedEnv;
       document.getElementById('img-open-env-back').src = processedAssets.openEnvBack;
       document.getElementById('img-open-env-front').src = processedAssets.openEnvFront;
       document.getElementById('img-lace-border').src = processedAssets.laceFrame;
@@ -1560,14 +1671,17 @@
 
       document.getElementById('card-guest-name').textContent = guest.name;
       document.getElementById('card-guest-note').textContent = guest.note || '';
-      document.getElementById('card-guest-photo').src = guest.photo || processedAssets.defaultPortrait;
+      if (guest.photo || processedAssets.defaultPortrait) {
+        document.getElementById('card-guest-photo').src = guest.photo || processedAssets.defaultPortrait;
+      }
 
       const statusEl = document.getElementById('rsvp-front-status');
+      const timeSuffix = guest.rsvpAt ? ` (${guest.rsvpAt})` : '';
       if (guest.rsvp === 'yes') {
-        statusEl.textContent = '✓ Đã xác nhận: Sẽ tham dự';
+        statusEl.textContent = `✓ Đã xác nhận: Sẽ tham dự${timeSuffix}`;
         statusEl.style.color = '#166534';
       } else if (guest.rsvp === 'no') {
-        statusEl.textContent = '✕ Đã phản hồi: Không thể tham dự';
+        statusEl.textContent = `✕ Đã phản hồi: Không thể tham dự${timeSuffix}`;
         statusEl.style.color = '#991b1b';
       } else {
         statusEl.textContent = 'Vui lòng chọn xác nhận tham dự';
@@ -1598,14 +1712,24 @@
     }
 
     async function submitRsvpResponse() {
-      const guest = appState.guests.find(g => g.id === currentGuestId);
+      const targetId = currentGuestId;
+      const msgText = document.getElementById('rsvp-message-input').value.trim();
+      const timestamp = formatVietnamDateTime(new Date());
+
+      // Fetch latest cloud state first so concurrent guest responses never overwrite each other
+      await syncFromSupabase(false);
+
+      const guest = appState.guests.find(g => g.id === targetId);
       if (!guest) return;
+
       guest.rsvp = pendingRsvpChoice;
-      guest.message = document.getElementById('rsvp-message-input').value.trim();
+      guest.rsvpAt = timestamp;
+      guest.message = msgText;
+
       await saveAppState(true);
       renderCurrentInvitation();
       renderAdminTable();
-      showToast(`Cảm ơn ${guest.name}! Đã gửi xác nhận & lời nhắn tới Ban Tổ Chức.`);
+      showToast(`Cảm ơn ${guest.name}! Đã gửi xác nhận lúc ${timestamp} tới Ban Tổ Chức.`);
     }
 
     /* ================= ADMIN TABS & CONTROLS ================= */
@@ -1694,12 +1818,27 @@
 
     function renderAdminTable() {
       syncGuestDropdown();
+
+      const total = appState.guests.length;
+      const yesCount = appState.guests.filter(g => g.rsvp === 'yes').length;
+      const noCount = appState.guests.filter(g => g.rsvp === 'no').length;
+      const pendingCount = total - yesCount - noCount;
+
+      document.getElementById('stat-total').textContent = total;
+      document.getElementById('stat-yes').textContent = yesCount;
+      document.getElementById('stat-no').textContent = noCount;
+      document.getElementById('stat-pending').textContent = pendingCount;
+
       const tbody = document.getElementById('guest-table-body');
       tbody.innerHTML = appState.guests.map(guest => {
         const photoSrc = guest.photo || processedAssets.defaultPortrait;
         let statusHtml = `<span class="status-pill status-pending">⏳ Chưa xác nhận</span>`;
         if (guest.rsvp === 'yes') statusHtml = `<span class="status-pill status-yes">✓ Sẽ tham dự</span>`;
         if (guest.rsvp === 'no') statusHtml = `<span class="status-pill status-no">✕ Không tham dự</span>`;
+
+        const timeHtml = guest.rsvpAt
+          ? `<span class="rsvp-time-text">🕒 Lúc ${guest.rsvpAt}</span>`
+          : '';
 
         return `
           <tr>
@@ -1708,7 +1847,10 @@
               <div style="font-weight:700; color:var(--wine-dark); font-size:14px;">${guest.name}</div>
               <div style="font-size:12px; color:var(--text-muted); margin-top:3px;">${guest.note || '—'}</div>
             </td>
-            <td>${statusHtml}</td>
+            <td>
+              ${statusHtml}
+              ${timeHtml}
+            </td>
             <td style="max-width:240px; font-style:italic; color:#4a2b2e;">
               ${guest.message ? `"${guest.message}"` : '<span style="color:#9e888a;">Chưa có lời nhắn</span>'}
             </td>
@@ -1792,6 +1934,7 @@
           note,
           photo: modalTempPhoto,
           rsvp: 'pending',
+          rsvpAt: '',
           message: ''
         });
         currentGuestId = newId;
@@ -1846,26 +1989,69 @@
       toast.textContent = msg;
       toast.classList.add('show');
       clearTimeout(window.__toastTimer);
-      window.__toastTimer = setTimeout(() => toast.classList.remove('show'), 3200);
+      window.__toastTimer = setTimeout(() => toast.classList.remove('show'), 3800);
     }
 
-    /* ================= INIT & URL GUEST MODE CHECK ================= */
+    /* ================= REALTIME SUBSCRIPTION & INIT ================= */
+    function setupSupabaseRealtime(isGuestMode) {
+      supabaseClient
+        .channel('invitation-live-sync')
+        .on(
+          'postgres_changes',
+          { event: '*', schema: 'public', table: 'invitation_store', filter: `id=eq.${SUPABASE_RECORD_ID}` },
+          (payload) => {
+            if (payload.new && payload.new.payload) {
+              const oldGuestsMap = new Map(appState.guests.map(g => [g.id, g]));
+              const incoming = payload.new.payload;
+              const newGuests = incoming.guests || appState.guests;
+
+              if (!isGuestMode) {
+                newGuests.forEach(ng => {
+                  const og = oldGuestsMap.get(ng.id);
+                  if (og && (og.rsvp !== ng.rsvp || og.rsvpAt !== ng.rsvpAt) && ng.rsvp !== 'pending') {
+                    const actionText = ng.rsvp === 'yes' ? 'ĐỒNG Ý THAM DỰ' : 'TỪ CHỐI THAM DỰ';
+                    showToast(`🔔 ${ng.name} vừa xác nhận ${actionText} lúc ${ng.rsvpAt || 'vừa xong'}!`);
+                  }
+                });
+              }
+
+              appState = {
+                event: { ...DEFAULT_STATE.event, ...(incoming.event || {}) },
+                guests: newGuests
+              };
+              localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(appState));
+              renderCurrentInvitation();
+              renderAdminTable();
+            }
+          }
+        )
+        .subscribe();
+    }
+
     window.addEventListener('DOMContentLoaded', async () => {
       const params = new URLSearchParams(window.location.search);
       const guestParam = params.get('guest');
+      const isGuestMode = Boolean(guestParam);
 
-      await resolveAllAssets();
-      await syncFromSupabase();
+      if (isGuestMode) {
+        document.body.classList.add('guest-mode');
+      }
+
+      fitDesktopStageToViewport();
+
+      await Promise.all([
+        resolveAllAssets(),
+        syncFromSupabase(false)
+      ]);
 
       if (guestParam) {
-        document.body.classList.add('guest-mode');
         const found = appState.guests.find(g => g.id === guestParam);
         if (found) currentGuestId = found.id;
       }
 
       renderCurrentInvitation();
       renderAdminTable();
-      fitDesktopStageToViewport();
+      setupSupabaseRealtime(isGuestMode);
     });
   </script>
 </body>
