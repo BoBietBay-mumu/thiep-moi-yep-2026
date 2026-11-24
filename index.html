@@ -1017,6 +1017,10 @@
       #btn-reclose { position: relative; left: auto; bottom: auto; margin-top: 10px; }
       .admin-grid-3, .stats-strip { grid-template-columns: 1fr; }
     }
+    img:not([src]), img[src=""] {
+      opacity: 0 !important;
+      visibility: hidden !important;
+    }
   </style>
 </head>
 <body>
@@ -2086,7 +2090,7 @@
       window.__toastTimer = setTimeout(() => toast.classList.remove('show'), 3800);
     }
 
-    /* ================= REALTIME SUBSCRIPTION & INSTANT BOOT ================= */
+    /* ================= REALTIME SUBSCRIPTION & COMPLETE ASSET BOOT ================= */
     function setupSupabaseRealtime(isGuestMode) {
       supabaseClient
         .channel('invitation-live-sync')
@@ -2134,16 +2138,13 @@
       }
 
       fitDesktopStageToViewport();
-      renderCurrentInvitation();
 
-      // Load ONLY the closed envelope first so spinner disappears immediately
-      await resolvePrimaryEnvelope();
-      const loader = document.getElementById('page-loader');
-      if (loader) loader.classList.add('fade-out');
-
-      // Load inner card layers & sync Supabase in the background without blocking UI
-      resolveInnerAssetsInBackground();
-      await syncFromSupabase(false);
+      // Load ALL 5 image layers + Supabase data in parallel before hiding spinner
+      await Promise.all([
+        resolvePrimaryEnvelope(),
+        resolveInnerAssetsInBackground(),
+        syncFromSupabase(false)
+      ]);
 
       if (guestParam) {
         const foundCloud = appState.guests.find(g => g.id === guestParam);
@@ -2153,9 +2154,11 @@
       renderCurrentInvitation();
       renderAdminTable();
       setupSupabaseRealtime(isGuestMode);
+
+      const loader = document.getElementById('page-loader');
+      if (loader) loader.classList.add('fade-out');
     });
   </script>
 </body>
 </html>
-</body>
-</html>
+
